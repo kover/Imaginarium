@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -52,6 +52,13 @@
                                                         <action selector="toggleLike" destination="jRm-8Z-uCx" eventType="touchUpInside" id="gN7-dI-SYI"/>
                                                     </connections>
                                                 </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cKU-um-wtE">
+                                                    <rect key="frame" x="16" y="191" width="329" height="30"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="V8b-Xr-ijZ"/>
+                                                    </constraints>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 января 1970" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7N-Mr-jRy">
                                                     <rect key="frame" x="24" y="197" width="86" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -61,12 +68,15 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="A1g-fE-4uw" firstAttribute="top" secondItem="moo-NS-Mic" secondAttribute="top" constant="4" id="2Ow-3e-aJ3"/>
+                                                <constraint firstItem="cKU-um-wtE" firstAttribute="trailing" secondItem="A1g-fE-4uw" secondAttribute="trailing" id="3b4-Y9-EtO"/>
                                                 <constraint firstAttribute="bottom" secondItem="A1g-fE-4uw" secondAttribute="bottom" constant="4" id="BIQ-Rm-GoL"/>
+                                                <constraint firstItem="cKU-um-wtE" firstAttribute="leading" secondItem="A1g-fE-4uw" secondAttribute="leading" id="Jrh-h8-yFD"/>
                                                 <constraint firstItem="G8w-ia-4v4" firstAttribute="top" secondItem="A1g-fE-4uw" secondAttribute="top" id="Jzo-Ac-O5X"/>
                                                 <constraint firstItem="F7N-Mr-jRy" firstAttribute="leading" secondItem="A1g-fE-4uw" secondAttribute="leading" constant="8" id="KRY-c7-Hvd"/>
                                                 <constraint firstAttribute="trailing" secondItem="A1g-fE-4uw" secondAttribute="trailing" constant="16" id="UE9-uk-yMr"/>
                                                 <constraint firstItem="G8w-ia-4v4" firstAttribute="trailing" secondItem="A1g-fE-4uw" secondAttribute="trailing" id="UXc-Et-jft"/>
                                                 <constraint firstItem="F7N-Mr-jRy" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="A1g-fE-4uw" secondAttribute="trailing" constant="8" id="Yrv-Rj-IMG"/>
+                                                <constraint firstItem="cKU-um-wtE" firstAttribute="bottom" secondItem="A1g-fE-4uw" secondAttribute="bottom" id="iFQ-PV-n9n"/>
                                                 <constraint firstItem="A1g-fE-4uw" firstAttribute="leading" secondItem="moo-NS-Mic" secondAttribute="leading" constant="16" id="vDR-DQ-mVZ"/>
                                                 <constraint firstItem="A1g-fE-4uw" firstAttribute="bottom" secondItem="F7N-Mr-jRy" secondAttribute="bottom" constant="8" id="w6r-47-T01"/>
                                             </constraints>
@@ -74,6 +84,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="cellImage" destination="A1g-fE-4uw" id="CBg-39-Bjx"/>
+                                            <outlet property="gradientView" destination="cKU-um-wtE" id="dou-1x-INy"/>
                                             <outlet property="likeButton" destination="G8w-ia-4v4" id="0vo-pH-jUh"/>
                                             <outlet property="postDate" destination="F7N-Mr-jRy" id="j4Y-MV-9gY"/>
                                         </connections>

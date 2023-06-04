@@ -18,5 +18,7 @@ extension ImagesListViewController {
         cell.setPostDate(dateFormatter.string(from: Date()))
 
         cell.isFavorite = indexPath.row % 2 == 0
+        
+        cell.addGradient()
     }
 }

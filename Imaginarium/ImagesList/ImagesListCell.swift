@@ -26,6 +26,17 @@ final class ImagesListCell: UITableViewCell {
         }
     }
     
+    private lazy var gradient: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        gradient.type = .axial
+        gradient.colors = [
+            UIColor(named: "Gradient Start")!.cgColor,
+            UIColor(named: "Gradient Stop")!.cgColor
+        ]
+        gradient.locations = [0, 0.53]
+        return gradient
+    }()
+    
     @IBOutlet private var cellImage: UIImageView!
     @IBOutlet private var likeButton: UIButton!
     @IBOutlet private var postDate: UILabel!
@@ -42,6 +53,11 @@ final class ImagesListCell: UITableViewCell {
     
     func setPostDate(_ date: String) {
         postDate.text = date
+    }
+    
+    func addGradient() {
+        gradient.frame = gradientView.bounds
+        gradientView.layer.addSublayer(gradient)
     }
     
 }
