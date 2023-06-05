@@ -11,28 +11,30 @@ final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
     
-    private var _isFavorite = true
+    private var favoriteFlag = true
     
     var isFavorite: Bool {
         set {
-            _isFavorite = newValue
-            guard let image = _isFavorite ? UIImage(named: "Liked") : UIImage(named: "Disliked") else {
+            favoriteFlag = newValue
+            guard let image = favoriteFlag ? UIImage(named: "Liked") : UIImage(named: "Disliked") else {
                 return
             }
             likeButton.setImage(image, for: .normal)
         }
         get {
-            return _isFavorite
+            return favoriteFlag
         }
     }
     
     private lazy var gradient: CAGradientLayer = {
         let gradient = CAGradientLayer()
         gradient.type = .axial
-        gradient.colors = [
-            UIColor(named: "Gradient Start")!.cgColor,
-            UIColor(named: "Gradient Stop")!.cgColor
-        ]
+        if let startColor = UIColor(named: "Gradient Start"), let stopColor = UIColor(named: "Gradient Stop") {
+            gradient.colors = [
+                startColor.cgColor,
+                stopColor.cgColor
+            ]
+        }
         gradient.locations = [0, 0.53]
         return gradient
     }()

@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		032AAE782A2D1EAB0018B065 /* ImageListViewController+CellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032AAE772A2D1EAB0018B065 /* ImageListViewController+CellConfiguration.swift */; };
-		039B26292A2B39660086F5E9 /* ImageListViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B26282A2B39660086F5E9 /* ImageListViewController+UITableViewDataSource.swift */; };
-		039B262B2A2B39970086F5E9 /* ImageListViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B262A2A2B39970086F5E9 /* ImageListViewController+UITableViewDelegate.swift */; };
 		039B262E2A2B3DEF0086F5E9 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B262D2A2B3DEF0086F5E9 /* ImagesListCell.swift */; };
 		03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E5729E2A27BC2F002438A1 /* AppDelegate.swift */; };
 		03E572A12A27BC2F002438A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E572A02A27BC2F002438A1 /* SceneDelegate.swift */; };
@@ -20,9 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		032AAE772A2D1EAB0018B065 /* ImageListViewController+CellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageListViewController+CellConfiguration.swift"; sourceTree = "<group>"; };
-		039B26282A2B39660086F5E9 /* ImageListViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageListViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
-		039B262A2A2B39970086F5E9 /* ImageListViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageListViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		039B262D2A2B3DEF0086F5E9 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		03E5729B2A27BC2F002438A1 /* Imaginarium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imaginarium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E5729E2A27BC2F002438A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,9 +42,6 @@
 		039B26272A2B39460086F5E9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				039B26282A2B39660086F5E9 /* ImageListViewController+UITableViewDataSource.swift */,
-				039B262A2A2B39970086F5E9 /* ImageListViewController+UITableViewDelegate.swift */,
-				032AAE772A2D1EAB0018B065 /* ImageListViewController+CellConfiguration.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -170,9 +161,6 @@
 				039B262E2A2B3DEF0086F5E9 /* ImagesListCell.swift in Sources */,
 				03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */,
 				03E572A12A27BC2F002438A1 /* SceneDelegate.swift in Sources */,
-				039B262B2A2B39970086F5E9 /* ImageListViewController+UITableViewDelegate.swift in Sources */,
-				039B26292A2B39660086F5E9 /* ImageListViewController+UITableViewDataSource.swift in Sources */,
-				032AAE782A2D1EAB0018B065 /* ImageListViewController+CellConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
