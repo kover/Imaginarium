@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tab_profile_active.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
