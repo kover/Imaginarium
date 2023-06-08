@@ -45,7 +45,12 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        configureCell(for: imageListCell, with: indexPath)
+        if let image = UIImage(named: photosName[indexPath.row]) {
+            imageListCell.configureCell(usingImage: image,
+                                        fromDate: dateFormatter.string(from: Date()),
+                                        withLike: indexPath.row % 2 == 0)
+        }
+
         return imageListCell
     }
 }
@@ -69,19 +74,3 @@ extension ImagesListViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Cell configuration extension
-extension ImagesListViewController {
-    private func configureCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return
-        }
-        
-        cell.setCellImage(image)
-        
-        cell.setPostDate(dateFormatter.string(from: Date()))
-
-        cell.isFavorite = indexPath.row % 2 == 0
-        
-        cell.addGradient()
-    }
-}
