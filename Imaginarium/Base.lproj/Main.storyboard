@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -104,14 +104,14 @@
                             <constraint firstItem="bdS-4X-MPt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qey-sB-Mac"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="1Qg-fp-3pd"/>
+                    <navigationItem key="navigationItem" id="jn7-oE-x8a"/>
                     <connections>
                         <outlet property="feedTableView" destination="bdS-4X-MPt" id="EUG-Tb-NU7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138.1679389312977" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="1064.885496183206" y="-2.1126760563380285"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="x2O-Gj-aIP">
@@ -127,7 +127,7 @@
                         </tabBarAppearance>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="MYx-EQ-NtK"/>
+                        <segue destination="0MG-iE-wEf" kind="relationship" relationship="viewControllers" id="MYx-EQ-NtK"/>
                         <segue destination="bgL-SC-zYA" kind="relationship" relationship="viewControllers" id="Skf-kQ-dJ2"/>
                     </connections>
                 </tabBarController>
@@ -211,6 +211,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zpC-9g-EFW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="138" y="671"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="OU3-YM-esn">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0MG-iE-wEf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="1Qg-fp-3pd"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ASF-lJ-o4a">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" name="YP White"/>
+                        <color key="barTintColor" name="YP White"/>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="YP Black"/>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="pax-xk-jFG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ol0-nO-gWK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138.1679389312977" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>
