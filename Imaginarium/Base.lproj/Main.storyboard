@@ -107,11 +107,42 @@
                     <navigationItem key="navigationItem" id="jn7-oE-x8a"/>
                     <connections>
                         <outlet property="feedTableView" destination="bdS-4X-MPt" id="EUG-Tb-NU7"/>
+                        <segue destination="dX5-Mm-aiB" kind="show" identifier="ShowSingleImage" id="Un1-tv-hoF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1064.885496183206" y="-2.1126760563380285"/>
+        </scene>
+        <!--Single Image View Controller-->
+        <scene sceneID="LOd-fs-f9n">
+            <objects>
+                <viewController id="dX5-Mm-aiB" customClass="SingleImageViewController" customModule="Imaginarium" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wNE-pD-Mqb">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="ufH-aO-DKJ">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Cxm-SH-ubF"/>
+                        <color key="backgroundColor" name="YP Black"/>
+                        <constraints>
+                            <constraint firstItem="ufH-aO-DKJ" firstAttribute="bottom" secondItem="Cxm-SH-ubF" secondAttribute="bottom" id="NBE-S3-W9I"/>
+                            <constraint firstItem="ufH-aO-DKJ" firstAttribute="trailing" secondItem="Cxm-SH-ubF" secondAttribute="trailing" id="WQ6-Ri-MEg"/>
+                            <constraint firstItem="ufH-aO-DKJ" firstAttribute="top" secondItem="Cxm-SH-ubF" secondAttribute="top" id="dV8-90-zua"/>
+                            <constraint firstItem="ufH-aO-DKJ" firstAttribute="leading" secondItem="Cxm-SH-ubF" secondAttribute="leading" id="iKJ-ci-ubA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bmf-kq-HaT"/>
+                    <connections>
+                        <outlet property="imageView" destination="ufH-aO-DKJ" id="PJL-fC-fvV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F8K-uc-0qj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2048.0916030534349" y="-2.1126760563380285"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="x2O-Gj-aIP">

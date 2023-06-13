@@ -30,6 +30,17 @@ final class ImagesListViewController: UIViewController {
         feedTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowSingleImage" {
+            let viewController = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            let image = UIImage(named: photosName[indexPath.row])
+            viewController.imageView.image = image
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
 }
 
 // MARK: - Table View Data Source extension
@@ -58,7 +69,7 @@ extension ImagesListViewController: UITableViewDataSource {
 // MARK: - Table View Delegate extension
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        performSegue(withIdentifier: "ShowSingleImage", sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
