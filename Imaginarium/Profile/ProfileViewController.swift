@@ -15,7 +15,5 @@ final class ProfileViewController: UIViewController {
     
     @IBOutlet private var logoutButton: UIButton!
     
-    @IBAction private func logoutTap() {
-        
-    }
+    @IBAction private func logoutTap() {}
 }
