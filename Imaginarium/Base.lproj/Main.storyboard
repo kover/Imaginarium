@@ -154,6 +154,18 @@
                                     <action selector="didTapBackButton" destination="dX5-Mm-aiB" eventType="touchUpInside" id="Oaz-2Q-qBA"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O2R-RE-P76">
+                                <rect key="frame" x="171.66666666666666" y="766" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="HFj-76-55m"/>
+                                    <constraint firstAttribute="width" constant="50" id="dU3-wS-6JT"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="Sharing"/>
+                                <connections>
+                                    <action selector="didTapShareButton" destination="dX5-Mm-aiB" eventType="touchUpInside" id="TjK-Cp-wMT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Cxm-SH-ubF"/>
                         <color key="backgroundColor" name="YP Black"/>
@@ -161,7 +173,9 @@
                             <constraint firstItem="DeX-tD-cdW" firstAttribute="trailing" secondItem="Cxm-SH-ubF" secondAttribute="trailing" id="1zM-IR-XpC"/>
                             <constraint firstItem="sZS-kZ-1C0" firstAttribute="top" secondItem="Cxm-SH-ubF" secondAttribute="top" constant="8" id="9RW-5m-i4f"/>
                             <constraint firstItem="sZS-kZ-1C0" firstAttribute="leading" secondItem="Cxm-SH-ubF" secondAttribute="leading" constant="8" id="FCI-0d-LZv"/>
+                            <constraint firstItem="O2R-RE-P76" firstAttribute="centerX" secondItem="wNE-pD-Mqb" secondAttribute="centerX" id="MhD-fg-3d7"/>
                             <constraint firstItem="DeX-tD-cdW" firstAttribute="bottom" secondItem="wNE-pD-Mqb" secondAttribute="bottom" id="PEy-gr-ceD"/>
+                            <constraint firstItem="Cxm-SH-ubF" firstAttribute="bottom" secondItem="O2R-RE-P76" secondAttribute="bottom" constant="36" id="Yz6-qP-UbR"/>
                             <constraint firstItem="DeX-tD-cdW" firstAttribute="leading" secondItem="Cxm-SH-ubF" secondAttribute="leading" id="mSo-oy-k4Y"/>
                             <constraint firstItem="DeX-tD-cdW" firstAttribute="top" secondItem="wNE-pD-Mqb" secondAttribute="top" id="tUC-A0-CoM"/>
                         </constraints>
@@ -280,6 +294,7 @@
         <image name="0" width="200" height="132"/>
         <image name="Exit Button" width="20" height="22"/>
         <image name="Liked" width="30" height="28"/>
+        <image name="Sharing" width="50" height="50"/>
         <image name="Userpic" width="70" height="70"/>
         <image name="nav_back_button_white" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>

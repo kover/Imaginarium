@@ -37,8 +37,13 @@ final class SingleImageViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @IBAction func didTapBackButton() {
+    @IBAction private func didTapBackButton() {
         dismiss(animated: true)
+    }
+    
+    @IBAction private func didTapShareButton() {
+        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        present(activityController, animated: true)
     }
     
     // MARK: - Scaling logic
