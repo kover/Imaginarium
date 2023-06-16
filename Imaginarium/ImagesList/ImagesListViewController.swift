@@ -21,6 +21,7 @@ final class ImagesListViewController: UIViewController {
     
     @IBOutlet private var feedTableView: UITableView!
     
+    // MARK: - Lifecycle and ViewController overrides
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }

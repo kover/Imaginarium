@@ -22,6 +22,10 @@ final class SingleImageViewController: UIViewController {
     @IBOutlet private var scrollView: UIScrollView!
     
     // MARK: - Lifecycle and ViewController overrides
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,10 +34,6 @@ final class SingleImageViewController: UIViewController {
         
         imageView.image = image
         rescaleAndCenterImageInScrollView(image: image)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     // MARK: - Actions

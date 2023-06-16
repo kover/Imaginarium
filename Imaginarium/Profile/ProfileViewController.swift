@@ -8,14 +8,17 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
+    // MARK: - Outlets
     private var profilePictureImageView: UIImageView!
     private var fullNameLabel: UILabel!
     private var userNameLabel: UILabel!
     private var profileDescriptionLabel: UILabel!
-    
     private var logoutButton: UIButton!
     
-    @objc private func logoutTap() {}
+    // MARK: - Lifecycle and ViewController overrides
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +30,8 @@ final class ProfileViewController: UIViewController {
         addLogoutButton()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    // MARK: - Actions
+    @objc private func logoutTap() {}
     
     // MARK: - Manual layout
     private func addProfileImageView() {
