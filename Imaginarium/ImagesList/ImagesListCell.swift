@@ -13,7 +13,7 @@ final class ImagesListCell: UITableViewCell {
     
     private var favoriteFlag = true
     
-    var isFavorite: Bool {
+    private var isFavorite: Bool {
         set {
             favoriteFlag = newValue
             guard let image = favoriteFlag ? UIImage(named: "Liked") : UIImage(named: "Disliked") else {
@@ -48,18 +48,16 @@ final class ImagesListCell: UITableViewCell {
         isFavorite = !isFavorite
     }
     
-    
-    func setCellImage(_ image: UIImage) {
+}
+
+// MARK: - Cell configuration extension
+extension ImagesListCell {
+    func configureCell(usingImage image: UIImage, fromDate date: String, withLike like: Bool) {
         cellImage.image = image
-    }
-    
-    func setPostDate(_ date: String) {
         postDate.text = date
-    }
-    
-    func addGradient() {
+        isFavorite = like
+        
         gradient.frame = gradientView.bounds
         gradientView.layer.addSublayer(gradient)
     }
-    
 }
