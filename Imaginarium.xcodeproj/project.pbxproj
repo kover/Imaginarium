@@ -51,13 +51,6 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		039B26272A2B39460086F5E9 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		039B262C2A2B3DD60086F5E9 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,7 +90,6 @@
 				03D328262A38DF9B004CAA82 /* SingleImageView */,
 				031D494E2A32458B008069CF /* Profile */,
 				039B262C2A2B3DD60086F5E9 /* ImagesList */,
-				039B26272A2B39460086F5E9 /* Extensions */,
 				03E5729E2A27BC2F002438A1 /* AppDelegate.swift */,
 				03E572A02A27BC2F002438A1 /* SceneDelegate.swift */,
 				03E572A42A27BC2F002438A1 /* Main.storyboard */,
