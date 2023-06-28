@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		031D49502A3245E8008069CF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D494F2A3245E8008069CF /* ProfileViewController.swift */; };
 		039B262E2A2B3DEF0086F5E9 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B262D2A2B3DEF0086F5E9 /* ImagesListCell.swift */; };
+		03BBCD632A4C25FA0054E285 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BBCD622A4C25FA0054E285 /* Constants.swift */; };
 		03D328282A38DFC3004CAA82 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D328272A38DFC3004CAA82 /* SingleImageViewController.swift */; };
 		03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E5729E2A27BC2F002438A1 /* AppDelegate.swift */; };
 		03E572A12A27BC2F002438A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E572A02A27BC2F002438A1 /* SceneDelegate.swift */; };
@@ -16,11 +17,14 @@
 		03E572A62A27BC2F002438A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03E572A42A27BC2F002438A1 /* Main.storyboard */; };
 		03E572A82A27BC31002438A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E572A72A27BC31002438A1 /* Assets.xcassets */; };
 		03E572AB2A27BC31002438A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03E572A92A27BC31002438A1 /* LaunchScreen.storyboard */; };
+		03E9637B2A4C74C70004EFFF /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E9637A2A4C74C70004EFFF /* AuthViewController.swift */; };
+		03E9637D2A4C87A10004EFFF /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E9637C2A4C87A10004EFFF /* WebViewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		031D494F2A3245E8008069CF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		039B262D2A2B3DEF0086F5E9 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		03BBCD622A4C25FA0054E285 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		03D328272A38DFC3004CAA82 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		03E5729B2A27BC2F002438A1 /* Imaginarium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imaginarium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E5729E2A27BC2F002438A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +34,8 @@
 		03E572A72A27BC31002438A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03E572AA2A27BC31002438A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03E572AC2A27BC31002438A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03E9637A2A4C74C70004EFFF /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		03E9637C2A4C87A10004EFFF /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,7 @@
 		03E5729D2A27BC2F002438A1 /* Imaginarium */ = {
 			isa = PBXGroup;
 			children = (
+				03E963792A4C74AC0004EFFF /* Auth */,
 				03D328262A38DF9B004CAA82 /* SingleImageView */,
 				031D494E2A32458B008069CF /* Profile */,
 				039B262C2A2B3DD60086F5E9 /* ImagesList */,
@@ -96,8 +103,18 @@
 				03E572A72A27BC31002438A1 /* Assets.xcassets */,
 				03E572A92A27BC31002438A1 /* LaunchScreen.storyboard */,
 				03E572AC2A27BC31002438A1 /* Info.plist */,
+				03BBCD622A4C25FA0054E285 /* Constants.swift */,
 			);
 			path = Imaginarium;
+			sourceTree = "<group>";
+		};
+		03E963792A4C74AC0004EFFF /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				03E9637A2A4C74C70004EFFF /* AuthViewController.swift */,
+				03E9637C2A4C87A10004EFFF /* WebViewViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,7 +192,10 @@
 				039B262E2A2B3DEF0086F5E9 /* ImagesListCell.swift in Sources */,
 				031D49502A3245E8008069CF /* ProfileViewController.swift in Sources */,
 				03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */,
+				03E9637B2A4C74C70004EFFF /* AuthViewController.swift in Sources */,
+				03BBCD632A4C25FA0054E285 /* Constants.swift in Sources */,
 				03D328282A38DFC3004CAA82 /* SingleImageViewController.swift in Sources */,
+				03E9637D2A4C87A10004EFFF /* WebViewViewController.swift in Sources */,
 				03E572A12A27BC2F002438A1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

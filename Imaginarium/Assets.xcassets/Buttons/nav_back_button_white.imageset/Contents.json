@@ -1,8 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "Backward.png",
-      "idiom" : "universal"
+      "filename" : "nav_back_button_white.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "nav_back_button_white@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "nav_back_button_white@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
