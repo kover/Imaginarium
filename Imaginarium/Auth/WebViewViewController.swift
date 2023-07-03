@@ -24,7 +24,10 @@ final class WebViewViewConroller: UIViewController {
         super.viewDidLoad()
         webView.navigationDelegate = self
         
-        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
+        guard var urlComponents = URLComponents(string: UnsplashAuthorizeURLString) else {
+            fatalError("Incorrect Unsplash authorization base URL")
+        }
+        
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: AccessKey),
             URLQueryItem(name: "redirect_uri", value: RedirectURI),
@@ -32,7 +35,9 @@ final class WebViewViewConroller: UIViewController {
             URLQueryItem(name: "scope", value: AccessScope)
         ]
         
-        let url = urlComponents.url!
+        guard let url = urlComponents.url else {
+            fatalError("Unable to build authorization URL with components")
+        }
         
         let request = URLRequest(url: url)
         webView.load(request)
@@ -75,6 +80,7 @@ final class WebViewViewConroller: UIViewController {
         delegate?.webViewViewControllerDidCancel(self)
     }
 }
+
 // MARK: - WKNavigationDelegate extension
 extension WebViewViewConroller: WKNavigationDelegate {
     func webView(

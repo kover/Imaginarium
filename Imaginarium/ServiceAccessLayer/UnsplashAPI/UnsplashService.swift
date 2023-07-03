@@ -12,12 +12,14 @@ final class UnsplashService {
     
     private var urlSession = URLSession.shared
     
-    private var selfProfileRequest: URLRequest {
+    private var selfProfileRequest: URLRequest? {
         URLRequest.makeHTTPRequest(path: "/me")
     }
     
     func fetchSelfProfile(completion: @escaping (Result<Profile, Error>) -> Void) {
-        let request = selfProfileRequest
+        guard let request = selfProfileRequest else {
+            fatalError("Unable to create fetchSelfProfile request")
+        }
         _ = object(Profile.self, for: request) { result in
             switch result {
             case .success(let body):
@@ -48,7 +50,6 @@ extension UnsplashService {
         }
     }
 }
-
 
 // MARK: - Profile
 struct Profile: Codable {
