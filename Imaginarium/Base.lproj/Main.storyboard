@@ -189,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F8K-uc-0qj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1994.6564885496182" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="2263" y="-2"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="6dg-XD-zVA">
@@ -242,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FvL-wg-Gdh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063" y="1383"/>
+            <point key="canvasLocation" x="1063" y="-732"/>
         </scene>
         <!--Web View View Conroller-->
         <scene sceneID="cuv-R2-K2x">
@@ -272,25 +272,33 @@
                                     <action selector="didTapBackButton:" destination="yP6-cl-u58" eventType="touchUpInside" id="fsn-Px-ZSv"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6Qg-3E-YjM">
+                                <rect key="frame" x="0.0" y="44" width="393" height="4"/>
+                                <color key="tintColor" name="YP Black"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Pl-yk-80G"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="jVX-6K-DqR" firstAttribute="top" secondItem="kOV-pv-0iG" secondAttribute="top" id="09c-AL-WME"/>
                             <constraint firstAttribute="trailing" secondItem="jVX-6K-DqR" secondAttribute="trailing" id="1NL-wX-bE3"/>
+                            <constraint firstItem="6Qg-3E-YjM" firstAttribute="top" secondItem="6TF-1Y-m0z" secondAttribute="bottom" id="8up-sl-YbG"/>
+                            <constraint firstItem="6Qg-3E-YjM" firstAttribute="leading" secondItem="kOV-pv-0iG" secondAttribute="leading" id="KM2-nO-NTC"/>
                             <constraint firstAttribute="bottom" secondItem="jVX-6K-DqR" secondAttribute="bottom" id="byV-fs-iHb"/>
+                            <constraint firstAttribute="trailing" secondItem="6Qg-3E-YjM" secondAttribute="trailing" id="c07-AJ-fsd"/>
                             <constraint firstItem="6TF-1Y-m0z" firstAttribute="top" secondItem="4Pl-yk-80G" secondAttribute="top" id="cjt-hV-yWs"/>
                             <constraint firstItem="6TF-1Y-m0z" firstAttribute="leading" secondItem="4Pl-yk-80G" secondAttribute="leading" id="qde-Ow-N6a"/>
                             <constraint firstItem="jVX-6K-DqR" firstAttribute="leading" secondItem="kOV-pv-0iG" secondAttribute="leading" id="vWI-bB-l4e"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressView" destination="6Qg-3E-YjM" id="pf0-Yj-O0D"/>
                         <outlet property="webView" destination="jVX-6K-DqR" id="N4S-fB-Dal"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWp-qy-QM1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2261.8320610687024" y="1381.6901408450706"/>
+            <point key="canvasLocation" x="2263" y="-733"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="x2O-Gj-aIP">
@@ -328,7 +336,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zpC-9g-EFW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063" y="706"/>
+            <point key="canvasLocation" x="1063" y="708"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="O1f-z3-yqj">
@@ -346,7 +354,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X0F-mu-DZZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-198" y="1383"/>
+            <point key="canvasLocation" x="-198" y="-733"/>
         </scene>
     </scenes>
     <resources>
