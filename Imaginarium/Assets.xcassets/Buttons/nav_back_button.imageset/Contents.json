@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "like_button_on.png",
+      "filename" : "nav_back_button.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "like_button_on@2x.png",
+      "filename" : "nav_back_button@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "like_button_on@3x.png",
+      "filename" : "nav_back_button@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
