@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol AuthViewControllerDelegate: AnyObject {
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
+}
+
 final class AuthViewController: UIViewController {
     
     private let webViewSegueIdentifier = "ShowWebView"
+    
+    var delegate: AuthViewControllerDelegate?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -32,9 +38,7 @@ final class AuthViewController: UIViewController {
 // MARK: - WebViewViewControllerDelegate implementation
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewConroller, didAuthenticateWithCode code: String) {
-        OAuth2Service.shared.fetchAuthToken(withCode: code) { result in
-            print(result)
-        }
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewConroller) {

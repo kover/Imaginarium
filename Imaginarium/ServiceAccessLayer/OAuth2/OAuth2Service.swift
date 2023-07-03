@@ -42,7 +42,7 @@ final class OAuth2Service {
         }
     }
 }
-
+// MARK: - Shared helpers
 extension OAuth2Service {
     private func object(
         for request: URLRequest,
