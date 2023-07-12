@@ -12,6 +12,9 @@ final class OAuth2Service {
     
     private let urlSession = URLSession.shared
     
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     private var authToken: String? {
         get {
             return OAuth2TokenStorage().token
@@ -26,10 +29,18 @@ final class OAuth2Service {
         withCode code: String,
         handler: @escaping (Result<String, Error>) -> Void
     ) {
+        assert(Thread.isMainThread)
+        if lastCode == code {
+            return
+        }
+
+        task?.cancel()
+        lastCode = code
+        
         guard let request = authTokenRequest(code: code) else {
             fatalError("Unable to create fetch authorization token request")
         }
-        _ = object(for: request) { [weak self] result in
+        let task = object(for: request) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -42,6 +53,7 @@ final class OAuth2Service {
                 handler(.failure(error))
             }
         }
+        self.task = task
     }
 }
 
