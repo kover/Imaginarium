@@ -7,10 +7,10 @@
 
 import Foundation
 
-final class ProfileService {
+final class ProfileService: NetworkService {
     static let shared = ProfileService()
     
-    private var urlSession = URLSession.shared
+    internal var urlSession = URLSession.shared
     private var tokenStorage = OAuth2TokenStorage()
     private var task: URLSessionTask?
     
@@ -18,7 +18,7 @@ final class ProfileService {
         URLRequest.makeHTTPRequest(path: "/me", token: tokenStorage.token)
     }
     
-    private(set) var profile: Profile?
+    private (set) var profile: Profile?
     
     func fetchProfile(completion: @escaping (Result<ProfileResult, Error>) -> Void) {
         assert(Thread.isMainThread)
@@ -47,22 +47,6 @@ final class ProfileService {
 
 // MARK: - Shared helpers
 extension ProfileService {
-    private func object<T: Codable>(
-        _ type: T.Type,
-        for request: URLRequest,
-        completion: @escaping (Result<T, Error>) -> Void
-    ) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<T, Error> in
-                Result {
-                    try decoder.decode(T.self, from: data)
-                }
-            }
-            completion(response)
-        }
-    }
-    
     private func setUserProfile(result: ProfileResult) {
         let profile = Profile(
             username: result.username,
