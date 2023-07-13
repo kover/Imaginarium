@@ -15,8 +15,12 @@ final class SplashScreenViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
+    private var alertPresenter: AlertPresenterProtocol!
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        alertPresenter = AlertPresenter(delegate: self)
         
         if let token = oaut2TokenStorage.token {
             UIBlockingProgressHUD.show()
@@ -87,7 +91,11 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
                 self.fetchProfile(token: token)
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                // TODO: Show error
+                let alert = AlertModel(title: "Что-то пошло не так(",
+                                       message: "Не удалось войти в систему",
+                                       buttonText: "OK")
+                
+                alertPresenter?.showAlert(model: alert)
                 break
             }
         }
@@ -108,7 +116,11 @@ private extension SplashScreenViewController {
                 self.switchToTabBarController()
             case.failure:
                 UIBlockingProgressHUD.dismiss()
-                // TODO: Show error
+                let alert = AlertModel(title: "Что-то пошло не так(",
+                                       message: "Не удалось войти в систему",
+                                       buttonText: "OK")
+                
+                alertPresenter?.showAlert(model: alert)
                 break
             }
         }

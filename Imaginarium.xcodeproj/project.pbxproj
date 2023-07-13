@@ -28,6 +28,7 @@
 		03E9637D2A4C87A10004EFFF /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E9637C2A4C87A10004EFFF /* WebViewViewController.swift */; };
 		03F8F09A2A5FDB6D001D69F5 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F8F0992A5FDB6D001D69F5 /* ProfileImageService.swift */; };
 		03F8F09E2A600B82001D69F5 /* URLSession+objectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F8F09D2A600B82001D69F5 /* URLSession+objectTask.swift */; };
+		03F8F0A12A6031F7001D69F5 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F8F0A02A6031F7001D69F5 /* AlertPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		03E9637C2A4C87A10004EFFF /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		03F8F0992A5FDB6D001D69F5 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		03F8F09D2A600B82001D69F5 /* URLSession+objectTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+objectTask.swift"; sourceTree = "<group>"; };
+		03F8F0A02A6031F7001D69F5 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 		03E5729D2A27BC2F002438A1 /* Imaginarium */ = {
 			isa = PBXGroup;
 			children = (
+				03F8F09F2A6031D8001D69F5 /* AlertPresenter */,
 				0378269B2A5EABF600E6F671 /* BlockingProgressHUD */,
 				033CA1012A52853B00768A7E /* Auth */,
 				033CA1002A5284FE00768A7E /* ServiceAccessLayer */,
@@ -189,6 +192,14 @@
 				033CA0F72A5267C800768A7E /* OAuth2TokenStorage.swift */,
 			);
 			path = OAuth2;
+			sourceTree = "<group>";
+		};
+		03F8F09F2A6031D8001D69F5 /* AlertPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				03F8F0A02A6031F7001D69F5 /* AlertPresenter.swift */,
+			);
+			path = AlertPresenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,6 +284,7 @@
 				0378269D2A5EAC3500E6F671 /* UIBlockingProgressHUD.swift in Sources */,
 				039B262E2A2B3DEF0086F5E9 /* ImagesListCell.swift in Sources */,
 				03F8F09E2A600B82001D69F5 /* URLSession+objectTask.swift in Sources */,
+				03F8F0A12A6031F7001D69F5 /* AlertPresenter.swift in Sources */,
 				031D49502A3245E8008069CF /* ProfileViewController.swift in Sources */,
 				03F8F09A2A5FDB6D001D69F5 /* ProfileImageService.swift in Sources */,
 				03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */,
