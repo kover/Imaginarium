@@ -87,6 +87,7 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
                 self.fetchProfile(token: token)
             case .failure:
                 UIBlockingProgressHUD.dismiss()
+                // TODO: Show error
                 break
             }
         }
@@ -107,6 +108,7 @@ private extension SplashScreenViewController {
                 self.switchToTabBarController()
             case.failure:
                 UIBlockingProgressHUD.dismiss()
+                // TODO: Show error
                 break
             }
         }

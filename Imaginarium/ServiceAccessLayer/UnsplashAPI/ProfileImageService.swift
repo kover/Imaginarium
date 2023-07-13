@@ -9,6 +9,7 @@ import Foundation
 
 final class ProfileImageService: NetworkService {
     static let shared = ProfileImageService()
+    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     var urlSession = URLSession.shared
     private var tokenStorage = OAuth2TokenStorage()
@@ -33,8 +34,14 @@ final class ProfileImageService: NetworkService {
             }
             switch result {
             case .success(let body):
-                self.avatarURL = body.profileImage.small
+                let profileImageURL = body.profileImage.small
+                self.avatarURL = profileImageURL
                 completion(.success(body.profileImage.small))
+                NotificationCenter.default
+                    .post(name: ProfileImageService.DidChangeNotification,
+                          object: self,
+                          userInfo: ["URL": profileImageURL]
+                    )
             case .failure(let error):
                 completion(.failure(error))
             }

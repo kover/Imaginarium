@@ -18,6 +18,9 @@ final class ProfileViewController: UIViewController {
     // MARK: - Network layer
     private var profileService = ProfileService.shared
     
+    // MARK: - Notifications
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     // MARK: - Lifecycle and ViewController overrides
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -32,10 +35,21 @@ final class ProfileViewController: UIViewController {
         addDescriptionLabel()
         addLogoutButton()
         
-        guard let profile = profileService.profile else {
-            return
+        if let profile = profileService.profile {
+            updateProfileDetails(profile: profile)
         }
-        updateProfileDetails(profile: profile)
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(forName: ProfileImageService.DidChangeNotification,
+                         object: nil,
+                         queue: .main
+            ) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     // MARK: - Actions
@@ -142,5 +156,15 @@ private extension ProfileViewController {
         fullNameLabel.text = profile.name
         userNameLabel.text = profile.loginName
         profileDescriptionLabel.text = profile.bio
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else {
+            return
+        }
+        // TODO: Sprint 11 Refresh avatar with Kingfisher
     }
 }
