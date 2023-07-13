@@ -7,10 +7,10 @@
 
 import Foundation
 
-final class ProfileService: NetworkService {
+final class ProfileService {
     static let shared = ProfileService()
     
-    internal var urlSession = URLSession.shared
+    private var urlSession = URLSession.shared
     private var tokenStorage = OAuth2TokenStorage()
     private var task: URLSessionTask?
     
@@ -27,7 +27,7 @@ final class ProfileService: NetworkService {
         guard let request = selfProfileRequest else {
             fatalError("Unable to create fetchSelfProfile request")
         }
-        let task = object(ProfileResult.self, for: request) { [weak self] result in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             guard let self = self else {
                 return
             }

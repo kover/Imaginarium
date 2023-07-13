@@ -7,18 +7,18 @@
 
 import Foundation
 
-final class ProfileImageService: NetworkService {
+final class ProfileImageService {
     static let shared = ProfileImageService()
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
-    var urlSession = URLSession.shared
+    private let urlSession = URLSession.shared
     private var tokenStorage = OAuth2TokenStorage()
     private var task: URLSessionTask?
     
     private (set) var avatarURL: String?
     
     private func profileImageURLRequest(username: String) -> URLRequest? {
-        URLRequest.makeHTTPRequest(path: "/users/\(username)")
+        URLRequest.makeHTTPRequest(path: "/users/\(username)", token: tokenStorage.token)
     }
     
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
@@ -28,7 +28,7 @@ final class ProfileImageService: NetworkService {
         guard let request = profileImageURLRequest(username: username) else {
             fatalError("Unable to create profile image request")
         }
-        let task = object(UserResult.self, for: request) { [weak self] result in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
             guard let self = self else {
                 return
             }

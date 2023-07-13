@@ -40,7 +40,7 @@ final class OAuth2Service {
         guard let request = authTokenRequest(code: code) else {
             fatalError("Unable to create fetch authorization token request")
         }
-        let task = object(for: request) { [weak self] result in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             guard let self = self else {
                 return
             }
@@ -59,21 +59,6 @@ final class OAuth2Service {
 
 // MARK: - Shared helpers
 extension OAuth2Service {
-    private func object(
-        for request: URLRequest,
-        completiion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void
-    ) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
-                Result {
-                    try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                }
-            }
-            completiion(response)
-        }
-    }
-    
     private func authTokenRequest(code: String) -> URLRequest? {
         guard let url = URL(string: "https://unsplash.com"),
                 let request = URLRequest.makeHTTPRequest(

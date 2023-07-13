@@ -25,9 +25,6 @@ extension URLRequest {
             request.setValue("Bearer \(oauthToken)", forHTTPHeaderField: "Authorization")
         }
         
-        if let authToken = OAuth2TokenStorage().token {
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-        }
         return request
     }
 }
