@@ -7,33 +7,46 @@
 
 import Foundation
 
-final class UnsplashService {
-    static let shared = UnsplashService()
+final class ProfileService {
+    static let shared = ProfileService()
     
     private var urlSession = URLSession.shared
+    private var tokenStorage = OAuth2TokenStorage()
+    private var task: URLSessionTask?
     
     private var selfProfileRequest: URLRequest? {
-        URLRequest.makeHTTPRequest(path: "/me")
+        URLRequest.makeHTTPRequest(path: "/me", token: tokenStorage.token)
     }
     
-    func fetchSelfProfile(completion: @escaping (Result<Profile, Error>) -> Void) {
+    private(set) var profile: Profile?
+    
+    func fetchProfile(completion: @escaping (Result<ProfileResult, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        task?.cancel()
+        
         guard let request = selfProfileRequest else {
             fatalError("Unable to create fetchSelfProfile request")
         }
-        _ = object(Profile.self, for: request) { result in
+        let task = object(ProfileResult.self, for: request) { [weak self] result in
+            guard let self = self else {
+                return
+            }
             switch result {
             case .success(let body):
+                self.setUserProfile(result: body)
                 completion(.success(body))
             case .failure(let error):
                 completion(.failure(error))
             }
         }
+        
+        self.task = task
     }
     
 }
 
 // MARK: - Shared helpers
-extension UnsplashService {
+extension ProfileService {
     private func object<T: Codable>(
         _ type: T.Type,
         for request: URLRequest,
@@ -49,10 +62,21 @@ extension UnsplashService {
             completion(response)
         }
     }
+    
+    private func setUserProfile(result: ProfileResult) {
+        let profile = Profile(
+            username: result.username,
+            name: "\(result.firstName) \(result.lastName)",
+            loginName: "@\(result.username)",
+            bio: result.bio
+        )
+        self.profile = profile
+    }
 }
 
-// MARK: - Profile
-struct Profile: Codable {
+
+// MARK: - ProfileResult
+struct ProfileResult: Codable {
     let id: String
     let updatedAt: String
     let username, firstName, lastName: String
@@ -96,4 +120,12 @@ struct Links: Codable {
         case linksSelf = "self"
         case html, photos, likes, portfolio
     }
+}
+
+// MARK: - Profile
+struct Profile {
+    var username: String
+    var name: String
+    var loginName: String
+    var bio: String?
 }

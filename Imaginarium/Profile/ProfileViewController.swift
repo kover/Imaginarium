@@ -15,6 +15,9 @@ final class ProfileViewController: UIViewController {
     private var profileDescriptionLabel: UILabel!
     private var logoutButton: UIButton!
     
+    // MARK: - Network layer
+    private var profileService = ProfileService.shared
+    
     // MARK: - Lifecycle and ViewController overrides
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -28,6 +31,11 @@ final class ProfileViewController: UIViewController {
         addUserNameLabel()
         addDescriptionLabel()
         addLogoutButton()
+        
+        guard let profile = profileService.profile else {
+            return
+        }
+        updateProfileDetails(profile: profile)
     }
     
     // MARK: - Actions
@@ -125,5 +133,14 @@ final class ProfileViewController: UIViewController {
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             button.centerYAnchor.constraint(equalTo: profilePictureImageView.centerYAnchor)
         ])
+    }
+}
+
+// MARK: - Profile Data
+private extension ProfileViewController {
+    private func updateProfileDetails(profile: Profile) {
+        fullNameLabel.text = profile.name
+        userNameLabel.text = profile.loginName
+        profileDescriptionLabel.text = profile.bio
     }
 }
