@@ -13,7 +13,7 @@
         <!--Images List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="Imaginarium" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagesListViewController" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="Imaginarium" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -334,7 +334,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="x2O-Gj-aIP">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarViewController" id="ggl-dQ-owD" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="ggl-dQ-owD" customClass="TabBarController" customModule="Imaginarium" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="pjY-fi-ukM"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qSd-Jj-zNw">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -345,30 +345,10 @@
                             <color key="backgroundColor" name="YP Black"/>
                         </tabBarAppearance>
                     </tabBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="wwp-7l-lQs"/>
-                        <segue destination="bgL-SC-zYA" kind="relationship" relationship="viewControllers" id="o64-Rx-qJC"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xhm-VZ-lqS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-197.70992366412213" y="325.35211267605638"/>
-        </scene>
-        <!--Profile View Controller-->
-        <scene sceneID="tdp-Fq-Kxd">
-            <objects>
-                <viewController id="bgL-SC-zYA" customClass="ProfileViewController" customModule="Imaginarium" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Zip-d7-Q81">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="kjK-T0-SpW"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="2VS-zY-ssQ"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zpC-9g-EFW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1063" y="708"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="O1f-z3-yqj">
@@ -399,7 +379,6 @@
         <image name="nav_back_button" width="24" height="24"/>
         <image name="nav_back_button_white" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>
-        <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
