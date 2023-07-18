@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     // MARK: - Outlets
@@ -165,6 +166,9 @@ private extension ProfileViewController {
         else {
             return
         }
-        // TODO: Sprint 11 Refresh avatar with Kingfisher
+        
+        let processor = RoundCornerImageProcessor(radius: .widthFraction(0.5), backgroundColor: UIColor(named: "YP Black"))
+        profilePictureImageView.kf.indicatorType = .activity
+        profilePictureImageView.kf.setImage(with: url, placeholder: UIImage(named: "Profile Stub"), options: [.processor(processor)])
     }
 }
