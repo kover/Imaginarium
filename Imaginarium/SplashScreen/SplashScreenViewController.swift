@@ -91,16 +91,7 @@ final class SplashScreenViewController: UIViewController {
 extension SplashScreenViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         UIBlockingProgressHUD.show()
-        
-        // Prevent viewDidAppear from restarting token/profile fetching when modal controllers are dismissed
-        isAlreadyShown = true
-
-        dismiss(animated: true) { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.fetchAuthToken(code)
-        }
+        self.fetchAuthToken(code)
     }
     
     private func fetchAuthToken(_ code: String) {
@@ -111,6 +102,7 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
             switch result {
             case .success(let token):
                 self.fetchProfile(token: token)
+                self.isAlreadyShown = true
             case .failure:
                 UIBlockingProgressHUD.dismiss()
                 let alert = AlertModel(title: "Что-то пошло не так(",
@@ -120,6 +112,7 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
                 alertPresenter?.showAlert(model: alert)
                 break
             }
+            self.dismiss(animated: true)
         }
     }
 }
