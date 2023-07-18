@@ -8,7 +8,8 @@
 import UIKit
 
 final class SplashScreenViewController: UIViewController {
-    private var showAuthenticationScreenSegue = "AuthenticationFlow"
+    
+    private var logoImageView: UIImageView!
     
     private let oauth2Service = OAuth2Service.shared
     private let oaut2TokenStorage = OAuth2TokenStorage()
@@ -16,6 +17,12 @@ final class SplashScreenViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     
     private var alertPresenter: AlertPresenterProtocol!
+    
+    override func viewDidLoad() {
+        view.backgroundColor = UIColor(named: "YP Black")
+        
+        addLogoImageView()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -26,7 +33,11 @@ final class SplashScreenViewController: UIViewController {
             UIBlockingProgressHUD.show()
             fetchProfile(token: token)
         } else {
-            performSegue(withIdentifier: showAuthenticationScreenSegue, sender: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: .main)
+            let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
+            authViewController.delegate = self
+            authViewController.modalPresentationStyle = .fullScreen
+            present(authViewController, animated: true)
         }
     }
     
@@ -49,24 +60,24 @@ final class SplashScreenViewController: UIViewController {
         
         window.rootViewController = tabBarController
     }
-}
-
-// MARK: - Check authorization
-extension SplashScreenViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegue {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                fatalError("Failed to prepare for \(showAuthenticationScreenSegue)")
-            }
-            
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+    
+    private func addLogoImageView() {
+        let image = UIImage(named: "Launch")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        logoImageView = imageView
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: 75),
+            imageView.heightAnchor.constraint(equalToConstant: 78),
+            imageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
     }
+
 }
 
 // MARK: - AuthViewControllerDelegate

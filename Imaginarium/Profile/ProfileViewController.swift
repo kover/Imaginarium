@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftKeychainWrapper
 
 final class ProfileViewController: UIViewController {
     // MARK: - Outlets
@@ -56,7 +57,9 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc private func logoutTap() {}
+    @objc private func logoutTap() {
+        KeychainWrapper.standard.removeObject(forKey: ApplicationTag)
+    }
     
     // MARK: - Manual layout
     private func addProfileImageView() {

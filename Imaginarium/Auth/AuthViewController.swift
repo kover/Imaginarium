@@ -21,10 +21,6 @@ final class AuthViewController: UIViewController {
         return .lightContent
     }
     
-    override func viewDidLoad() {
-        navigationController?.navigationBar.barStyle = .black
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == webViewSegueIdentifier,
             let viewController = segue.destination as? WebViewViewConroller
