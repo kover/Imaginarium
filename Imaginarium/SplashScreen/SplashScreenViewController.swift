@@ -26,18 +26,20 @@ final class SplashScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         alertPresenter = AlertPresenter(delegate: self)
         
         if let token = oaut2TokenStorage.token {
             UIBlockingProgressHUD.show()
             fetchProfile(token: token)
         } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: .main)
-            let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
-            authViewController.delegate = self
-            authViewController.modalPresentationStyle = .fullScreen
-            present(authViewController, animated: true)
+            let vc = UIStoryboard(name: "Main", bundle: .main)
+                .instantiateViewController(withIdentifier: "AuthViewController")
+            
+            if let authViewController = vc as? AuthViewController {
+                authViewController.delegate = self
+                authViewController.modalPresentationStyle = .fullScreen
+                present(authViewController, animated: true)
+            }
         }
     }
     
