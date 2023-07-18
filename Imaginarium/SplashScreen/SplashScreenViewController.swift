@@ -18,16 +18,21 @@ final class SplashScreenViewController: UIViewController {
     
     private var alertPresenter: AlertPresenterProtocol!
     
+    // This one is used to prevent fetching token/profile when modals are dismissed
+    private var isAlreadyShown = false
+    
     override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "YP Black")
-        
+        alertPresenter = AlertPresenter(delegate: self)
         addLogoImageView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        alertPresenter = AlertPresenter(delegate: self)
         
+        if isAlreadyShown {
+            return
+        }
         if let token = oaut2TokenStorage.token {
             UIBlockingProgressHUD.show()
             fetchProfile(token: token)
@@ -86,6 +91,10 @@ final class SplashScreenViewController: UIViewController {
 extension SplashScreenViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         UIBlockingProgressHUD.show()
+        
+        // Prevent viewDidAppear from restarting token/profile fetching when modal controllers are dismissed
+        isAlreadyShown = true
+
         dismiss(animated: true) { [weak self] in
             guard let self = self else {
                 return

@@ -57,9 +57,7 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc private func logoutTap() {
-        KeychainWrapper.standard.removeObject(forKey: ApplicationTag)
-    }
+    @objc private func logoutTap() {}
     
     // MARK: - Manual layout
     private func addProfileImageView() {
