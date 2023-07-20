@@ -29,8 +29,7 @@ final class OAuth2Service {
         withCode code: String,
         handler: @escaping (Result<String, Error>) -> Void
     ) {
-        assert(Thread.isMainThread)
-        if lastCode == code {
+        guard Thread.isMainThread || lastCode != code else {
             return
         }
 
@@ -38,7 +37,7 @@ final class OAuth2Service {
         lastCode = code
         
         guard let request = authTokenRequest(code: code) else {
-            fatalError("Unable to create fetch authorization token request")
+            return
         }
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             guard let self = self else {

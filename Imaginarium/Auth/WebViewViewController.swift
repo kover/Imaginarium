@@ -31,7 +31,7 @@ final class WebViewViewConroller: UIViewController {
         webView.navigationDelegate = self
         
         guard var urlComponents = URLComponents(string: UnsplashAuthorizeURLString) else {
-            fatalError("Incorrect Unsplash authorization base URL")
+            return
         }
         
         urlComponents.queryItems = [
@@ -42,7 +42,7 @@ final class WebViewViewConroller: UIViewController {
         ]
         
         guard let url = urlComponents.url else {
-            fatalError("Unable to build authorization URL with components")
+            return
         }
         
         estimatedProgressObservation = webView.observe(

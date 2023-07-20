@@ -13,15 +13,17 @@ final class SplashScreenViewController: UIViewController {
     
     private let oauth2Service = OAuth2Service.shared
     private let oaut2TokenStorage = OAuth2TokenStorage()
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
+    private let profileService: ProfileServiceProtocol = ProfileService()
+    private let profileImageService: ProfileImageServiceProtocol = ProfileImageService()
     
     private var alertPresenter: AlertPresenterProtocol!
     
     // This one is used to prevent fetching token/profile when modals are dismissed
     private var isAlreadyShown = false
     
+    
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = UIColor(named: "YP Black")
         alertPresenter = AlertPresenter(delegate: self)
         addLogoImageView()
@@ -59,11 +61,18 @@ final class SplashScreenViewController: UIViewController {
     
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else {
-            fatalError("Invalid Configuration")
+            return
         }
         
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
+        
+        guard let tabBarController = tabBarController as? TabBarController else {
+            return
+        }
+        
+        tabBarController.profileImageService = profileImageService
+        tabBarController.profileService = profileService
         
         window.rootViewController = tabBarController
     }
@@ -109,7 +118,7 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
                                        message: "Не удалось войти в систему",
                                        buttonText: "OK")
                 
-                alertPresenter?.showAlert(model: alert)
+                self.alertPresenter?.showAlert(model: alert)
                 break
             }
             self.dismiss(animated: true)
@@ -126,7 +135,7 @@ private extension SplashScreenViewController {
             }
             switch result {
             case .success(let profile):
-                profileImageService.fetchProfileImageURL(username: profile.username) { _ in }
+                self.profileImageService.fetchProfileImageURL(username: profile.username) { _ in }
                 UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarController()
             case.failure:
@@ -135,7 +144,7 @@ private extension SplashScreenViewController {
                                        message: "Не удалось войти в систему",
                                        buttonText: "OK")
                 
-                alertPresenter?.showAlert(model: alert)
+                self.alertPresenter?.showAlert(model: alert)
                 break
             }
         }

@@ -8,6 +8,30 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
+    var profileImageService: ProfileImageServiceProtocol? {
+        didSet {
+            guard let service = profileImageService,
+                    let viewControllers = viewControllers,
+                    let profileViewController = viewControllers[1] as? ProfileViewController
+            else {
+                return
+            }
+            profileViewController.profileImageService = service
+        }
+    }
+    
+    var profileService: ProfileServiceProtocol? {
+        didSet {
+            guard let service = profileService,
+                  let viewControllers = viewControllers,
+                  let profileViewController = viewControllers[1] as? ProfileViewController
+            else {
+                return
+            }
+            profileViewController.profileService = service
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
@@ -23,5 +47,4 @@ final class TabBarController: UITabBarController {
         
         self.viewControllers = [imagesListViewController, profileViewController]
     }
-    
 }

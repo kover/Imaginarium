@@ -7,7 +7,6 @@
 
 import UIKit
 import Kingfisher
-import SwiftKeychainWrapper
 
 final class ProfileViewController: UIViewController {
     // MARK: - Outlets
@@ -17,8 +16,8 @@ final class ProfileViewController: UIViewController {
     private var profileDescriptionLabel: UILabel!
     private var logoutButton: UIButton!
     
-    // MARK: - Network layer
-    private var profileService = ProfileService.shared
+    var profileService: ProfileServiceProtocol?
+    var profileImageService: ProfileImageServiceProtocol?
     
     // MARK: - Notifications
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -39,12 +38,12 @@ final class ProfileViewController: UIViewController {
         addDescriptionLabel()
         addLogoutButton()
         
-        if let profile = profileService.profile {
+        if let profile = profileService?.profile {
             updateProfileDetails(profile: profile)
         }
         
         profileImageServiceObserver = NotificationCenter.default
-            .addObserver(forName: ProfileImageService.DidChangeNotification,
+            .addObserver(forName: ProfileImageService.didChangeNotification,
                          object: nil,
                          queue: .main
             ) { [weak self] _ in
@@ -164,7 +163,7 @@ private extension ProfileViewController {
     
     private func updateAvatar() {
         guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let profileImageURL = profileImageService?.avatarURL,
             let url = URL(string: profileImageURL)
         else {
             return
