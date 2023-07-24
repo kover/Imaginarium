@@ -21,10 +21,6 @@ final class AuthViewController: UIViewController {
         return .lightContent
     }
     
-    override func viewDidLoad() {
-        navigationController?.navigationBar.barStyle = .black
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == webViewSegueIdentifier,
             let viewController = segue.destination as? WebViewViewConroller
@@ -39,6 +35,7 @@ final class AuthViewController: UIViewController {
 // MARK: - WebViewViewControllerDelegate implementation
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewConroller, didAuthenticateWithCode code: String) {
+        vc.dismiss(animated: true)
         delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
     

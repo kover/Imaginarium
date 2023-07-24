@@ -8,18 +8,45 @@
 import UIKit
 
 final class SplashScreenViewController: UIViewController {
-    private var showAuthenticationScreenSegue = "AuthenticationFlow"
+    
+    private var logoImageView: UIImageView!
     
     private let oauth2Service = OAuth2Service.shared
     private let oaut2TokenStorage = OAuth2TokenStorage()
+    private let profileService: ProfileServiceProtocol = ProfileService()
+    private let profileImageService: ProfileImageServiceProtocol = ProfileImageService()
+    
+    private var alertPresenter: AlertPresenterProtocol!
+    
+    // This one is used to prevent fetching token/profile when modals are dismissed
+    private var isAlreadyShown = false
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "YP Black")
+        alertPresenter = AlertPresenter(delegate: self)
+        addLogoImageView()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if isAlreadyShown {
+            return
+        }
         if let token = oaut2TokenStorage.token {
-            switchToTabBarController()
+            UIBlockingProgressHUD.show()
+            fetchProfile(token: token)
         } else {
-            performSegue(withIdentifier: showAuthenticationScreenSegue, sender: nil)
+            let vc = UIStoryboard(name: "Main", bundle: .main)
+                .instantiateViewController(withIdentifier: "AuthViewController")
+            
+            if let authViewController = vc as? AuthViewController {
+                authViewController.delegate = self
+                authViewController.modalPresentationStyle = .fullScreen
+                present(authViewController, animated: true)
+            }
         }
     }
     
@@ -34,43 +61,46 @@ final class SplashScreenViewController: UIViewController {
     
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else {
-            fatalError("Invalid Configuration")
+            return
         }
         
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
         
+        guard let tabBarController = tabBarController as? TabBarController else {
+            return
+        }
+        
+        tabBarController.profileImageService = profileImageService
+        tabBarController.profileService = profileService
+        
         window.rootViewController = tabBarController
     }
-}
-
-// MARK: - Check authorization
-extension SplashScreenViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegue {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                fatalError("Failed to prepare for \(showAuthenticationScreenSegue)")
-            }
-            
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+    
+    private func addLogoImageView() {
+        let image = UIImage(named: "Launch")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        logoImageView = imageView
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: 75),
+            imageView.heightAnchor.constraint(equalToConstant: 78),
+            imageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
     }
+
 }
 
 // MARK: - AuthViewControllerDelegate
 extension SplashScreenViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        dismiss(animated: true) { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.fetchAuthToken(code)
-        }
+        UIBlockingProgressHUD.show()
+        self.fetchAuthToken(code)
     }
     
     private func fetchAuthToken(_ code: String) {
@@ -79,9 +109,42 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
                 return
             }
             switch result {
-            case .success:
-                self.switchToTabBarController()
+            case .success(let token):
+                self.fetchProfile(token: token)
+                self.isAlreadyShown = true
             case .failure:
+                UIBlockingProgressHUD.dismiss()
+                let alert = AlertModel(title: "Что-то пошло не так(",
+                                       message: "Не удалось войти в систему",
+                                       buttonText: "OK")
+                
+                self.alertPresenter?.showAlert(model: alert)
+                break
+            }
+            self.dismiss(animated: true)
+        }
+    }
+}
+
+// MARK: - Profile data
+private extension SplashScreenViewController {
+    private func fetchProfile(token: String) {
+        profileService.fetchProfile { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .success(let profile):
+                self.profileImageService.fetchProfileImageURL(username: profile.username) { _ in }
+                UIBlockingProgressHUD.dismiss()
+                self.switchToTabBarController()
+            case.failure:
+                UIBlockingProgressHUD.dismiss()
+                let alert = AlertModel(title: "Что-то пошло не так(",
+                                       message: "Не удалось войти в систему",
+                                       buttonText: "OK")
+                
+                self.alertPresenter?.showAlert(model: alert)
                 break
             }
         }

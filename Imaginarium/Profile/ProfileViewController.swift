@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     // MARK: - Outlets
@@ -15,6 +16,12 @@ final class ProfileViewController: UIViewController {
     private var profileDescriptionLabel: UILabel!
     private var logoutButton: UIButton!
     
+    var profileService: ProfileServiceProtocol?
+    var profileImageService: ProfileImageServiceProtocol?
+    
+    // MARK: - Notifications
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     // MARK: - Lifecycle and ViewController overrides
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -23,11 +30,29 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor(named: "YP Black")
+        
         addProfileImageView()
         addFullNameLabel()
         addUserNameLabel()
         addDescriptionLabel()
         addLogoutButton()
+        
+        if let profile = profileService?.profile {
+            updateProfileDetails(profile: profile)
+        }
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(forName: ProfileImageService.didChangeNotification,
+                         object: nil,
+                         queue: .main
+            ) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     // MARK: - Actions
@@ -125,5 +150,27 @@ final class ProfileViewController: UIViewController {
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             button.centerYAnchor.constraint(equalTo: profilePictureImageView.centerYAnchor)
         ])
+    }
+}
+
+// MARK: - Profile Data
+private extension ProfileViewController {
+    private func updateProfileDetails(profile: Profile) {
+        fullNameLabel.text = profile.name
+        userNameLabel.text = profile.loginName
+        profileDescriptionLabel.text = profile.bio
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = profileImageService?.avatarURL,
+            let url = URL(string: profileImageURL)
+        else {
+            return
+        }
+        
+        let processor = RoundCornerImageProcessor(radius: .widthFraction(0.5), backgroundColor: UIColor(named: "YP Black"))
+        profilePictureImageView.kf.indicatorType = .activity
+        profilePictureImageView.kf.setImage(with: url, placeholder: UIImage(named: "Profile Stub"), options: [.processor(processor)])
     }
 }

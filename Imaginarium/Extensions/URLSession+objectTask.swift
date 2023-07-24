@@ -1,8 +1,8 @@
 //
-//  URLSession+data.swift
+//  URLSession+objectTask.swift
 //  Imaginarium
 //
-//  Created by Konstantin Penzin on 30.06.2023.
+//  Created by Konstantin Penzin on 13.07.2023.
 //
 
 import Foundation
@@ -11,14 +11,15 @@ enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case responseDecodeError
 }
 
 extension URLSession {
-    func data(
+    func objectTask<T: Decodable>(
         for request: URLRequest,
-        completion: @escaping (Result<Data, Error>) -> Void
+        completion: @escaping (Result<T, Error>) -> Void
     ) -> URLSessionTask {
-        let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
+        let fulfillCompletion: (Result<T, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
             }
@@ -30,7 +31,13 @@ extension URLSession {
                let statusCode = (response as? HTTPURLResponse)?.statusCode
             {
                 if 200 ..< 300 ~= statusCode {
-                    fulfillCompletion(.success(data))
+                    do {
+                        let decoder = JSONDecoder()
+                        let result = try decoder.decode(T.self, from: data)
+                        fulfillCompletion(.success(result))
+                    } catch {
+                        fulfillCompletion(.failure(NetworkError.responseDecodeError))
+                    }
                 } else {
                     fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
                 }
