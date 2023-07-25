@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ImageListServiceProtocol {
+protocol ImagesListServiceProtocol {
     var photos: [Photo] { get }
     func fetchPhotosNextPage()
 }

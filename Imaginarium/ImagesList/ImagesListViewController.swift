@@ -8,6 +8,9 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
+    
+    var imageListService: ImagesListServiceProtocol?
+    
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
     private let photosName: [String] = Array(0..<22).map{ "\($0)" }
@@ -30,6 +33,7 @@ final class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         feedTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        imageListService?.fetchPhotosNextPage()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,6 +87,12 @@ extension ImagesListViewController: UITableViewDelegate {
         let scale = imageViewWidth / imageWidth
         let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == imageListService?.photos.count {
+            imageListService?.fetchPhotosNextPage()
+        }
     }
 }
 

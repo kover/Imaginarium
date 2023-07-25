@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ImageListService: ImageListServiceProtocol {
+final class ImagesListService: ImagesListServiceProtocol {
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     private (set) var photos: [Photo] = []
     
@@ -39,7 +39,6 @@ final class ImageListService: ImageListServiceProtocol {
             }
             switch result {
             case .success(let photoResult):
-                print(photoResult)
                 photos.append(contentsOf: photoResult.map({ item in
                     Photo(
                         id: item.id,
@@ -52,10 +51,9 @@ final class ImageListService: ImageListServiceProtocol {
                     )
                 }))
                 NotificationCenter.default
-                    .post(name: ImageListService.didChangeNotification,
+                    .post(name: ImagesListService.didChangeNotification,
                     object: self,
                           userInfo: nil)
-                print(photos)
             case .failure:
                 // TODO: Handle error
                 return

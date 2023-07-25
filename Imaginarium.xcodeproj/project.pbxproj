@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		030AE5DA2A6FBA7600A4ED89 /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030AE5D92A6FBA7600A4ED89 /* ImageListService.swift */; };
+		030AE5DA2A6FBA7600A4ED89 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030AE5D92A6FBA7600A4ED89 /* ImagesListService.swift */; };
 		030AE5DC2A6FBAE200A4ED89 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030AE5DB2A6FBAE200A4ED89 /* Photo.swift */; };
-		030AE5DE2A6FBBE300A4ED89 /* ImageListServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030AE5DD2A6FBBE300A4ED89 /* ImageListServiceProtocol.swift */; };
+		030AE5DE2A6FBBE300A4ED89 /* ImagesListServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030AE5DD2A6FBBE300A4ED89 /* ImagesListServiceProtocol.swift */; };
 		030AE5E02A6FC19700A4ED89 /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030AE5DF2A6FC19700A4ED89 /* PhotoResult.swift */; };
 		030AE5E22A6FC31400A4ED89 /* UrlsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030AE5E12A6FC31400A4ED89 /* UrlsResult.swift */; };
 		031D49502A3245E8008069CF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D494F2A3245E8008069CF /* ProfileViewController.swift */; };
@@ -47,9 +47,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		030AE5D92A6FBA7600A4ED89 /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
+		030AE5D92A6FBA7600A4ED89 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 		030AE5DB2A6FBAE200A4ED89 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		030AE5DD2A6FBBE300A4ED89 /* ImageListServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListServiceProtocol.swift; sourceTree = "<group>"; };
+		030AE5DD2A6FBBE300A4ED89 /* ImagesListServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListServiceProtocol.swift; sourceTree = "<group>"; };
 		030AE5DF2A6FC19700A4ED89 /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
 		030AE5E12A6FC31400A4ED89 /* UrlsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlsResult.swift; sourceTree = "<group>"; };
 		031D494F2A3245E8008069CF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 				034FE5842A69852C00926BA6 /* Models */,
 				033CA0FE2A52757000768A7E /* ProfileService.swift */,
 				03F8F0992A5FDB6D001D69F5 /* ProfileImageService.swift */,
-				030AE5D92A6FBA7600A4ED89 /* ImageListService.swift */,
+				030AE5D92A6FBA7600A4ED89 /* ImagesListService.swift */,
 			);
 			path = UnsplashAPI;
 			sourceTree = "<group>";
@@ -162,7 +162,7 @@
 				034FE5802A697AF300926BA6 /* UserResult.swift */,
 				034FE5822A697B0400926BA6 /* ProfileImage.swift */,
 				030AE5DB2A6FBAE200A4ED89 /* Photo.swift */,
-				030AE5DD2A6FBBE300A4ED89 /* ImageListServiceProtocol.swift */,
+				030AE5DD2A6FBBE300A4ED89 /* ImagesListServiceProtocol.swift */,
 				030AE5DF2A6FC19700A4ED89 /* PhotoResult.swift */,
 				030AE5E12A6FC31400A4ED89 /* UrlsResult.swift */,
 			);
@@ -358,7 +358,7 @@
 				03F8F09A2A5FDB6D001D69F5 /* ProfileImageService.swift in Sources */,
 				034FE5792A69713600926BA6 /* AlertModel.swift in Sources */,
 				03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */,
-				030AE5DE2A6FBBE300A4ED89 /* ImageListServiceProtocol.swift in Sources */,
+				030AE5DE2A6FBBE300A4ED89 /* ImagesListServiceProtocol.swift in Sources */,
 				038B73232A4EC6D2008BE1B4 /* OAuth2Service.swift in Sources */,
 				034FE5862A69876400926BA6 /* ProfileServiceProtocol.swift in Sources */,
 				031E0DFB2A668A2F00A725D5 /* TabBarController.swift in Sources */,
@@ -369,7 +369,7 @@
 				03D328282A38DFC3004CAA82 /* SingleImageViewController.swift in Sources */,
 				03E9637D2A4C87A10004EFFF /* WebViewViewController.swift in Sources */,
 				038B73262A4ECAD0008BE1B4 /* URLRequest+makeHTTPRequest.swift in Sources */,
-				030AE5DA2A6FBA7600A4ED89 /* ImageListService.swift in Sources */,
+				030AE5DA2A6FBA7600A4ED89 /* ImagesListService.swift in Sources */,
 				033CA0F82A5267C800768A7E /* OAuth2TokenStorage.swift in Sources */,
 				03E572A12A27BC2F002438A1 /* SceneDelegate.swift in Sources */,
 				033CA0FF2A52757000768A7E /* ProfileService.swift in Sources */,
