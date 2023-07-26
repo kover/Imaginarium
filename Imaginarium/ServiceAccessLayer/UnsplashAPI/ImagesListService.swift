@@ -16,9 +16,14 @@ final class ImagesListService: ImagesListServiceProtocol {
     private let urlSession = URLSession.shared
     private var tokenStorage = OAuth2TokenStorage()
     private var task: URLSessionTask?
+    private var pendingLikeTask: URLSessionTask?
     
     private func photoURLRequest(pageNumber: Int) -> URLRequest? {
         URLRequest.makeHTTPRequest(path: "/photos?page=\(pageNumber)", token: tokenStorage.token)
+    }
+    
+    private func toggleLikeRequest(photoId: String, like: Bool) -> URLRequest? {
+        URLRequest.makeHTTPRequest(path: "/photos/\(photoId)/like", httpMethod: like ? "POST" : "DELETE", token: tokenStorage.token)
     }
     
     func fetchPhotosNextPage() {
@@ -28,7 +33,7 @@ final class ImagesListService: ImagesListServiceProtocol {
         : lastLoadedPage! + 1
         
         guard Thread.isMainThread,
-              task == nil,
+              task?.state != .running,
               let request = photoURLRequest(pageNumber: nextPage) else {
             return
         }
@@ -61,9 +66,45 @@ final class ImagesListService: ImagesListServiceProtocol {
                 // TODO: Handle and display error
                 return
             }
-            self.task = nil
         }
         
         self.task = task
+    }
+    
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+        guard Thread.isMainThread,
+              pendingLikeTask?.state != .running,
+              let request = toggleLikeRequest(photoId: photoId, like: isLike) else {
+            return
+        }
+        
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<PhotoLikeResult, Error>) in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .success:
+                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                    let photo = self.photos[index]
+                    
+                    let newPhoto = Photo(
+                        id: photo.id,
+                        size: photo.size,
+                        createdAt: photo.createdAt,
+                        welcomeDescription: photo.welcomeDescription,
+                        thumbImageURL: photo.thumbImageURL,
+                        targetImageURL: photo.targetImageURL,
+                        isLiked: !photo.isLiked
+                    )
+                    self.photos[index] = newPhoto
+                }
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+        self.task = task
+              
     }
 }

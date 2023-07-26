@@ -76,6 +76,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        imageListCell.delegate = self
         imageListCell.configureCell(usingPhoto: photos[indexPath.row]) {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
@@ -131,3 +132,20 @@ extension ImagesListViewController {
     }
 }
 
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = feedTableView.indexPath(for: cell) else {
+            return
+        }
+        let photo  = photos[indexPath.row]
+        imagesListService?.changeLike(photoId: photo.id, isLike: !photo.isLiked, { result in
+            switch result {
+            case .success:
+                cell.setIsLiked(isLiked: !photo.isLiked)
+            case .failure:
+                // TODO: Handle error
+                return
+            }
+        })
+    }
+}

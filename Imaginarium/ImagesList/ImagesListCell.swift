@@ -12,18 +12,14 @@ final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
     
-    private var favoriteFlag = true
+    weak var delegate: ImagesListCellDelegate?
     
-    private var isFavorite: Bool {
-        set {
-            favoriteFlag = newValue
-            guard let image = favoriteFlag ? UIImage(named: "Liked") : UIImage(named: "Disliked") else {
+    private var isFavorite: Bool = false {
+        didSet {
+            guard let image = isFavorite ? UIImage(named: "Liked") : UIImage(named: "Disliked") else {
                 return
             }
             likeButton.setImage(image, for: .normal)
-        }
-        get {
-            return favoriteFlag
         }
     }
     
@@ -46,13 +42,17 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet private var gradientView: UIView!
     
     @IBAction func toggleLike() {
-        isFavorite = !isFavorite
+        delegate?.imageListCellDidTapLike(self)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
 
         cellImage.kf.cancelDownloadTask()
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        isFavorite = isLiked
     }
     
 }
