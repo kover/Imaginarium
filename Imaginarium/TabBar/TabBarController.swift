@@ -41,7 +41,7 @@ final class TabBarController: UITabBarController {
         guard let imagesListViewController = imagesListViewController as? ImagesListViewController else {
             return
         }
-        imagesListViewController.imageListService = ImagesListService()
+        imagesListViewController.imagesListService = ImagesListService()
         
         let profileViewController = ProfileViewController()
         profileViewController.tabBarItem = UITabBarItem(

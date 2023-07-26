@@ -9,11 +9,14 @@ import UIKit
 
 final class ImagesListViewController: UIViewController {
     
-    var imageListService: ImagesListServiceProtocol?
+    var imagesListService: ImagesListServiceProtocol?
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
     private let photosName: [String] = Array(0..<22).map{ "\($0)" }
+    private var photos: [Photo] = []
+    
+    private var imagesListServiceObserver: NSObjectProtocol?
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -33,7 +36,19 @@ final class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         feedTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        imageListService?.fetchPhotosNextPage()
+        
+        imagesListServiceObserver = NotificationCenter.default
+            .addObserver(forName: ImagesListService.didChangeNotification,
+                         object: nil,
+                         queue: .main
+            ) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                self.updateTableViewAnimated()
+            }
+        
+        imagesListService?.fetchPhotosNextPage()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -51,7 +66,7 @@ final class ImagesListViewController: UIViewController {
 // MARK: - Table View Data Source extension
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 22
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,10 +76,8 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if let image = UIImage(named: photosName[indexPath.row]) {
-            imageListCell.configureCell(usingImage: image,
-                                        fromDate: dateFormatter.string(from: Date()),
-                                        withLike: indexPath.row % 2 == 0)
+        imageListCell.configureCell(usingPhoto: photos[indexPath.row]) {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
 
         return imageListCell
@@ -78,21 +91,43 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return 0
-        }
+        let imageSize = photos[indexPath.row].size
+        
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let imageWidth = image.size.width
+        let imageWidth = imageSize.width
         let scale = imageViewWidth / imageWidth
-        let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
+        let cellHeight = imageSize.height * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == imageListService?.photos.count {
-            imageListService?.fetchPhotosNextPage()
+        if indexPath.row + 1 == imagesListService?.photos.count {
+            imagesListService?.fetchPhotosNextPage()
         }
+    }
+}
+
+// MARK: - Table update
+extension ImagesListViewController {
+    func updateTableViewAnimated() {
+        guard let imagesListService = imagesListService else {
+            return
+        }
+        let currentCount = photos.count
+        let newCount = imagesListService.photos.count
+        photos = imagesListService.photos
+        
+        if currentCount == newCount {
+            return
+        }
+        
+        feedTableView.performBatchUpdates {
+            feedTableView.insertRows(at: (currentCount..<newCount).map { index in
+                IndexPath(row: index, section: 0)
+            }, with: .automatic)
+        }
+
     }
 }
 

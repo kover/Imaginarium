@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     
@@ -48,14 +49,34 @@ final class ImagesListCell: UITableViewCell {
         isFavorite = !isFavorite
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        cellImage.kf.cancelDownloadTask()
+    }
+    
 }
 
 // MARK: - Cell configuration extension
 extension ImagesListCell {
-    func configureCell(usingImage image: UIImage, fromDate date: String, withLike like: Bool) {
-        cellImage.image = image
-        postDate.text = date
-        isFavorite = like
+    func configureCell(usingPhoto photo: Photo, completion: @escaping () -> Void) {
+        guard let date = photo.createdAt else {
+            return
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        postDate.text = dateFormatter.string(from: date)
+        
+        isFavorite = photo.isLiked
+        
+        cellImage.kf.indicatorType = .activity
+        cellImage.kf.setImage(
+            with: URL(string: photo.thumbImageURL),
+            placeholder: UIImage(named: "Stub")
+        ) { _ in
+            completion()
+        }
         
         gradient.frame = gradientView.bounds
         gradientView.layer.addSublayer(gradient)

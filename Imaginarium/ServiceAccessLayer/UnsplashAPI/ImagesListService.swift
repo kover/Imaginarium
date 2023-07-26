@@ -51,13 +51,17 @@ final class ImagesListService: ImagesListServiceProtocol {
                     )
                 }))
                 NotificationCenter.default
-                    .post(name: ImagesListService.didChangeNotification,
-                    object: self,
-                          userInfo: nil)
+                    .post(
+                        name: ImagesListService.didChangeNotification,
+                        object: self,
+                        userInfo: nil
+                    )
+                lastLoadedPage = nextPage
             case .failure:
-                // TODO: Handle error
+                // TODO: Handle and display error
                 return
             }
+            self.task = nil
         }
         
         self.task = task
