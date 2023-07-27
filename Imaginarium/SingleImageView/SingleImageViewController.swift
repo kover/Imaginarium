@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController {
     var image: UIImage! {
@@ -15,6 +16,15 @@ final class SingleImageViewController: UIViewController {
             }
             imageView.image = image
             rescaleAndCenterImageInScrollView(image: image)
+        }
+    }
+    
+    var photo: Photo! {
+        didSet {
+            guard isViewLoaded else {
+                return
+            }
+            loadImage()
         }
     }
     
@@ -32,8 +42,7 @@ final class SingleImageViewController: UIViewController {
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
+        loadImage()
     }
     
     // MARK: - Actions
@@ -47,6 +56,22 @@ final class SingleImageViewController: UIViewController {
         }
         let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         present(activityController, animated: true)
+    }
+    
+    private func loadImage() {
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: URL(string: photo.targetImageURL)) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .success(let imageResult):
+                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+            case .failure:
+                self.showError()
+            }
+        }
     }
     
     // MARK: - Scaling logic
@@ -82,5 +107,27 @@ final class SingleImageViewController: UIViewController {
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
+    }
+}
+
+private extension SingleImageViewController {
+    private func showError() {
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: "Что-то пошло не так. Попробовать ещё раз?",
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Не надо", style: .cancel) { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        let retryAction = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+            self?.loadImage()
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(retryAction)
+        
+        present(alert, animated: true)
     }
 }

@@ -55,8 +55,8 @@ final class ImagesListViewController: UIViewController {
         if segue.identifier == ShowSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            let photo = photos[indexPath.row]
+            viewController.photo = photo
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -138,13 +138,18 @@ extension ImagesListViewController: ImagesListCellDelegate {
             return
         }
         let photo  = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
         imagesListService?.changeLike(photoId: photo.id, isLike: !photo.isLiked, { result in
             switch result {
             case .success:
+                if let servicePhotos = self.imagesListService?.photos {
+                    self.photos = servicePhotos
+                }
                 cell.setIsLiked(isLiked: !photo.isLiked)
+                UIBlockingProgressHUD.dismiss()
             case .failure:
+                UIBlockingProgressHUD.dismiss()
                 // TODO: Handle error
-                return
             }
         })
     }
