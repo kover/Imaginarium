@@ -25,4 +25,8 @@ final class OAuth2TokenStorage {
             }
         }
     }
+    
+    func removeToken() -> Bool {
+        return KeychainWrapper.standard.removeObject(forKey: ApplicationTag)
+    }
 }

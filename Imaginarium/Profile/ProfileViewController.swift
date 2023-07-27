@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     // MARK: - Outlets
@@ -26,6 +27,8 @@ final class ProfileViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    private var tokenStorage = OAuth2TokenStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +59,27 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc private func logoutTap() {}
+    @objc private func logoutTap() {
+        guard tokenStorage.removeToken(), let window = (UIApplication.shared
+            .connectedScenes
+            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+            .last { $0.isKeyWindow }) else {
+                return
+            }
+        
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(
+                    ofTypes: record.dataTypes,
+                    for: [record],
+                    completionHandler: {}
+                )
+            }
+            window.rootViewController = SplashScreenViewController()
+        }
+        
+    }
     
     // MARK: - Manual layout
     private func addProfileImageView() {
