@@ -60,6 +60,26 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func logoutTap() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйте?",
+            preferredStyle: .alert
+        )
+        
+        let confirmAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            self?.logoutAndCleanup()
+        }
+        let cancelAction = UIAlertAction(title: "Нет", style: .default) { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
+    }
+    
+    private func logoutAndCleanup() {
         guard tokenStorage.removeToken(), let window = (UIApplication.shared
             .connectedScenes
             .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
@@ -78,7 +98,6 @@ final class ProfileViewController: UIViewController {
             }
             window.rootViewController = SplashScreenViewController()
         }
-        
     }
     
     // MARK: - Manual layout

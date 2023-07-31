@@ -77,7 +77,13 @@ extension ImagesListViewController: UITableViewDataSource {
         }
         
         imageListCell.delegate = self
-        imageListCell.configureCell(usingPhoto: photos[indexPath.row]) {
+        
+        let photo = photos[indexPath.row]
+        var postedAt = ""
+        if let createdAt = photo.createdAt {
+            postedAt = dateFormatter.string(from: createdAt)
+        }
+        imageListCell.configureCell(forPhoto: photo.thumbImageURL, postedAt: postedAt, liked: photo.isLiked) {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
 

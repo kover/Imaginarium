@@ -10,7 +10,7 @@ import Foundation
 // MARK: - PhotoResult
 struct PhotoResult: Codable {
     let id: String
-    let createdAt: Date
+    let createdAt: Date?
     let width, height: Double
     let likedByUser: Bool
     let description: String?

@@ -59,24 +59,19 @@ final class ImagesListCell: UITableViewCell {
 
 // MARK: - Cell configuration extension
 extension ImagesListCell {
-    func configureCell(usingPhoto photo: Photo, completion: @escaping () -> Void) {
-        guard let date = photo.createdAt else {
-            return
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yyyy"
-        postDate.text = dateFormatter.string(from: date)
-        
-        isFavorite = photo.isLiked
+    func configureCell(forPhoto url: String, postedAt createdAt: String, liked: Bool, completion: @escaping () -> Void) {
         
         cellImage.kf.indicatorType = .activity
         cellImage.kf.setImage(
-            with: URL(string: photo.thumbImageURL),
+            with: URL(string: url),
             placeholder: UIImage(named: "Stub")
         ) { _ in
             completion()
         }
+        
+        postDate.text = createdAt
+        
+        isFavorite = liked
         
         gradient.frame = gradientView.bounds
         gradientView.layer.addSublayer(gradient)

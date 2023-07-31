@@ -8,17 +8,7 @@
 import UIKit
 import Kingfisher
 
-final class SingleImageViewController: UIViewController {
-    var image: UIImage! {
-        didSet {
-            guard isViewLoaded else {
-                return
-            }
-            imageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
-        }
-    }
-    
+final class SingleImageViewController: UIViewController {    
     var photo: Photo! {
         didSet {
             guard isViewLoaded else {
@@ -51,7 +41,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     @IBAction private func didTapShareButton() {
-        guard let image = image else {
+        guard let image = imageView.image else {
             return
         }
         let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
