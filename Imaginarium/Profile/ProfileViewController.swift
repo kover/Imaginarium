@@ -62,7 +62,7 @@ final class ProfileViewController: UIViewController {
     @objc private func logoutTap() {
         let alert = UIAlertController(
             title: "Пока, пока!",
-            message: "Уверены что хотите выйте?",
+            message: "Уверены что хотите выйти?",
             preferredStyle: .alert
         )
         

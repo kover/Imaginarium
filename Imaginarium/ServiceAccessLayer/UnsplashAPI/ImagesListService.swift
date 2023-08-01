@@ -26,7 +26,7 @@ final class ImagesListService: ImagesListServiceProtocol {
         URLRequest.makeHTTPRequest(path: "/photos/\(photoId)/like", httpMethod: like ? "POST" : "DELETE", token: tokenStorage.token)
     }
     
-    func fetchPhotosNextPage() {
+    func fetchPhotosNextPage(completion: @escaping (Result<Void, Error>) -> Void) {
         
         let nextPage = lastLoadedPage == nil
         ? 1
@@ -62,9 +62,9 @@ final class ImagesListService: ImagesListServiceProtocol {
                         userInfo: nil
                     )
                 lastLoadedPage = nextPage
-            case .failure:
-                // TODO: Handle and display error
-                return
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
         
@@ -108,3 +108,4 @@ final class ImagesListService: ImagesListServiceProtocol {
               
     }
 }
+

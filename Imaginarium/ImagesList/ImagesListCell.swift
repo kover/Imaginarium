@@ -36,10 +36,10 @@ final class ImagesListCell: UITableViewCell {
         return gradient
     }()
     
-    @IBOutlet private var cellImage: UIImageView!
-    @IBOutlet private var likeButton: UIButton!
-    @IBOutlet private var postDate: UILabel!
-    @IBOutlet private var gradientView: UIView!
+    @IBOutlet private weak var cellImage: UIImageView!
+    @IBOutlet private weak var likeButton: UIButton!
+    @IBOutlet private weak var postDate: UILabel!
+    @IBOutlet private weak var gradientView: UIView!
     
     @IBAction func toggleLike() {
         delegate?.imageListCellDidTapLike(self)

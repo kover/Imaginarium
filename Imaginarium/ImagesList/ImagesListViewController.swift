@@ -48,7 +48,7 @@ final class ImagesListViewController: UIViewController {
                 self.updateTableViewAnimated()
             }
         
-        imagesListService?.fetchPhotosNextPage()
+        loadNextPage()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -60,6 +60,17 @@ final class ImagesListViewController: UIViewController {
         } else {
             super.prepare(for: segue, sender: sender)
         }
+    }
+    
+    private func loadNextPage() {
+        imagesListService?.fetchPhotosNextPage(completion: { result in
+            switch result {
+            case .failure:
+                return
+            default:
+                return
+            }
+        })
     }
 }
 
@@ -83,9 +94,7 @@ extension ImagesListViewController: UITableViewDataSource {
         if let createdAt = photo.createdAt {
             postedAt = dateFormatter.string(from: createdAt)
         }
-        imageListCell.configureCell(forPhoto: photo.thumbImageURL, postedAt: postedAt, liked: photo.isLiked) {
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
+        imageListCell.configureCell(forPhoto: photo.thumbImageURL, postedAt: postedAt, liked: photo.isLiked) {}
 
         return imageListCell
     }
@@ -110,7 +119,7 @@ extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == imagesListService?.photos.count {
-            imagesListService?.fetchPhotosNextPage()
+            loadNextPage()
         }
     }
 }
@@ -145,18 +154,43 @@ extension ImagesListViewController: ImagesListCellDelegate {
         }
         let photo  = photos[indexPath.row]
         UIBlockingProgressHUD.show()
-        imagesListService?.changeLike(photoId: photo.id, isLike: !photo.isLiked, { result in
+        imagesListService?.changeLike(photoId: photo.id, isLike: !photo.isLiked, { [weak self] result in
+            guard let self = self else {
+                return
+            }
             switch result {
             case .success:
                 if let servicePhotos = self.imagesListService?.photos {
                     self.photos = servicePhotos
                 }
                 cell.setIsLiked(isLiked: !photo.isLiked)
-                UIBlockingProgressHUD.dismiss()
             case .failure:
-                UIBlockingProgressHUD.dismiss()
+                return
                 // TODO: Handle error
             }
+            UIBlockingProgressHUD.dismiss()
         })
+    }
+}
+
+private extension ImagesListViewController {
+    private func showError() {
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: "Что-то пошло не так. Попробовать ещё раз?",
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Не надо", style: .cancel) { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        let retryAction = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+            self?.loadNextPage()
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(retryAction)
+        
+        present(alert, animated: true)
     }
 }
