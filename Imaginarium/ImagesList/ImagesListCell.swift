@@ -6,23 +6,20 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
     
-    private var favoriteFlag = true
+    weak var delegate: ImagesListCellDelegate?
     
-    private var isFavorite: Bool {
-        set {
-            favoriteFlag = newValue
-            guard let image = favoriteFlag ? UIImage(named: "Liked") : UIImage(named: "Disliked") else {
+    private var isFavorite: Bool = false {
+        didSet {
+            guard let image = isFavorite ? UIImage(named: "Liked") : UIImage(named: "Disliked") else {
                 return
             }
             likeButton.setImage(image, for: .normal)
-        }
-        get {
-            return favoriteFlag
         }
     }
     
@@ -39,23 +36,42 @@ final class ImagesListCell: UITableViewCell {
         return gradient
     }()
     
-    @IBOutlet private var cellImage: UIImageView!
-    @IBOutlet private var likeButton: UIButton!
-    @IBOutlet private var postDate: UILabel!
-    @IBOutlet private var gradientView: UIView!
+    @IBOutlet private weak var cellImage: UIImageView!
+    @IBOutlet private weak var likeButton: UIButton!
+    @IBOutlet private weak var postDate: UILabel!
+    @IBOutlet private weak var gradientView: UIView!
     
     @IBAction func toggleLike() {
-        isFavorite = !isFavorite
+        delegate?.imageListCellDidTapLike(self)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        cellImage.kf.cancelDownloadTask()
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        isFavorite = isLiked
     }
     
 }
 
 // MARK: - Cell configuration extension
 extension ImagesListCell {
-    func configureCell(usingImage image: UIImage, fromDate date: String, withLike like: Bool) {
-        cellImage.image = image
-        postDate.text = date
-        isFavorite = like
+    func configureCell(forPhoto url: String, postedAt createdAt: String, liked: Bool, completion: @escaping () -> Void) {
+        
+        cellImage.kf.indicatorType = .activity
+        cellImage.kf.setImage(
+            with: URL(string: url),
+            placeholder: UIImage(named: "Stub")
+        ) { _ in
+            completion()
+        }
+        
+        postDate.text = createdAt
+        
+        isFavorite = liked
         
         gradient.frame = gradientView.bounds
         gradientView.layer.addSublayer(gradient)
