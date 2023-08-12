@@ -33,6 +33,7 @@
 		038B73262A4ECAD0008BE1B4 /* URLRequest+makeHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B73252A4ECAD0008BE1B4 /* URLRequest+makeHTTPRequest.swift */; };
 		039B262E2A2B3DEF0086F5E9 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B262D2A2B3DEF0086F5E9 /* ImagesListCell.swift */; };
 		03A201822A8756980005DD61 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A201812A8756980005DD61 /* AuthHelper.swift */; };
+		03A2018A2A8764DD0005DD61 /* WebViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A201892A8764DD0005DD61 /* WebViewTests.swift */; };
 		03BBCD632A4C25FA0054E285 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BBCD622A4C25FA0054E285 /* AuthConfiguration.swift */; };
 		03D328282A38DFC3004CAA82 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D328272A38DFC3004CAA82 /* SingleImageViewController.swift */; };
 		03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E5729E2A27BC2F002438A1 /* AppDelegate.swift */; };
@@ -49,6 +50,16 @@
 		03F8F09E2A600B82001D69F5 /* URLSession+objectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F8F09D2A600B82001D69F5 /* URLSession+objectTask.swift */; };
 		03F8F0A12A6031F7001D69F5 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F8F0A02A6031F7001D69F5 /* AlertPresenter.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03A2018B2A8764DD0005DD61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03E572932A27BC2F002438A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03E5729A2A27BC2F002438A1;
+			remoteInfo = Imaginarium;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		030AE5D92A6FBA7600A4ED89 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
@@ -74,6 +85,8 @@
 		038B73252A4ECAD0008BE1B4 /* URLRequest+makeHTTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+makeHTTPRequest.swift"; sourceTree = "<group>"; };
 		039B262D2A2B3DEF0086F5E9 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		03A201812A8756980005DD61 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
+		03A201872A8764DD0005DD61 /* ImaginariumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImaginariumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		03A201892A8764DD0005DD61 /* WebViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTests.swift; sourceTree = "<group>"; };
 		03BBCD622A4C25FA0054E285 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		03D328272A38DFC3004CAA82 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		03E5729B2A27BC2F002438A1 /* Imaginarium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imaginarium.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +107,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		03A201842A8764DD0005DD61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03E572982A27BC2F002438A1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -208,6 +228,14 @@
 			path = ImagesList;
 			sourceTree = "<group>";
 		};
+		03A201882A8764DD0005DD61 /* ImaginariumTests */ = {
+			isa = PBXGroup;
+			children = (
+				03A201892A8764DD0005DD61 /* WebViewTests.swift */,
+			);
+			path = ImaginariumTests;
+			sourceTree = "<group>";
+		};
 		03D328262A38DF9B004CAA82 /* SingleImageView */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				03E5729D2A27BC2F002438A1 /* Imaginarium */,
+				03A201882A8764DD0005DD61 /* ImaginariumTests */,
 				03E5729C2A27BC2F002438A1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -228,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				03E5729B2A27BC2F002438A1 /* Imaginarium.app */,
+				03A201872A8764DD0005DD61 /* ImaginariumTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -276,6 +306,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		03A201862A8764DD0005DD61 /* ImaginariumTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03A2018D2A8764DD0005DD61 /* Build configuration list for PBXNativeTarget "ImaginariumTests" */;
+			buildPhases = (
+				03A201832A8764DD0005DD61 /* Sources */,
+				03A201842A8764DD0005DD61 /* Frameworks */,
+				03A201852A8764DD0005DD61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03A2018C2A8764DD0005DD61 /* PBXTargetDependency */,
+			);
+			name = ImaginariumTests;
+			productName = ImaginariumTests;
+			productReference = 03A201872A8764DD0005DD61 /* ImaginariumTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		03E5729A2A27BC2F002438A1 /* Imaginarium */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03E572AF2A27BC31002438A1 /* Build configuration list for PBXNativeTarget "Imaginarium" */;
@@ -308,6 +356,10 @@
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					03A201862A8764DD0005DD61 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 03E5729A2A27BC2F002438A1;
+					};
 					03E5729A2A27BC2F002438A1 = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -332,11 +384,19 @@
 			projectRoot = "";
 			targets = (
 				03E5729A2A27BC2F002438A1 /* Imaginarium */,
+				03A201862A8764DD0005DD61 /* ImaginariumTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		03A201852A8764DD0005DD61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03E572992A27BC2F002438A1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -350,6 +410,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		03A201832A8764DD0005DD61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03A2018A2A8764DD0005DD61 /* WebViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03E572972A27BC2F002438A1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -394,6 +462,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		03A2018C2A8764DD0005DD61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03E5729A2A27BC2F002438A1 /* Imaginarium */;
+			targetProxy = 03A2018B2A8764DD0005DD61 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		03E572A42A27BC2F002438A1 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -414,6 +490,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		03A2018E2A8764DD0005DD61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9R2KGM7B52;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takeastar.ImaginariumTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Imaginarium.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Imaginarium";
+			};
+			name = Debug;
+		};
+		03A2018F2A8764DD0005DD61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9R2KGM7B52;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takeastar.ImaginariumTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Imaginarium.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Imaginarium";
+			};
+			name = Release;
+		};
 		03E572AD2A27BC31002438A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -593,6 +705,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		03A2018D2A8764DD0005DD61 /* Build configuration list for PBXNativeTarget "ImaginariumTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03A2018E2A8764DD0005DD61 /* Debug */,
+				03A2018F2A8764DD0005DD61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		03E572962A27BC2F002438A1 /* Build configuration list for PBXProject "Imaginarium" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

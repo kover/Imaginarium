@@ -247,7 +247,7 @@
         <!--Web View View Conroller-->
         <scene sceneID="cuv-R2-K2x">
             <objects>
-                <viewController id="yP6-cl-u58" customClass="WebViewViewConroller" customModule="Imaginarium" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" id="yP6-cl-u58" customClass="WebViewViewConroller" customModule="Imaginarium" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kOV-pv-0iG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
