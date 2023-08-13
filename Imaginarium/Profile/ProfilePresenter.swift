@@ -10,8 +10,6 @@ import WebKit
 
 protocol ProfileViewPresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
-    var profileService: ProfileServiceProtocol? { get set }
-    var profileImageService: ProfileImageServiceProtocol? { get set }
     func logoutAndCleanup()
     func updateProfileDetails()
     func updateProfileImage()
