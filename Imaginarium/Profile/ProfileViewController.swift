@@ -9,7 +9,13 @@ import UIKit
 import Kingfisher
 import WebKit
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateProfileDetails(profile: Profile)
+    func updateAvatar(from avatarURL: String?)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     // MARK: - Outlets
     private var profilePictureImageView: UIImageView!
     private var fullNameLabel: UILabel!
@@ -17,18 +23,12 @@ final class ProfileViewController: UIViewController {
     private var profileDescriptionLabel: UILabel!
     private var logoutButton: UIButton!
     
-    var profileService: ProfileServiceProtocol?
-    var profileImageService: ProfileImageServiceProtocol?
-    
-    // MARK: - Notifications
-    private var profileImageServiceObserver: NSObjectProtocol?
+    var presenter: ProfileViewPresenterProtocol?
     
     // MARK: - Lifecycle and ViewController overrides
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    private var tokenStorage = OAuth2TokenStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,21 +41,8 @@ final class ProfileViewController: UIViewController {
         addDescriptionLabel()
         addLogoutButton()
         
-        if let profile = profileService?.profile {
-            updateProfileDetails(profile: profile)
-        }
-        
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(forName: ProfileImageService.didChangeNotification,
-                         object: nil,
-                         queue: .main
-            ) { [weak self] _ in
-                guard let self = self else {
-                    return
-                }
-                self.updateAvatar()
-            }
-        updateAvatar()
+        presenter?.updateProfileDetails()
+        presenter?.updateProfileImage()
     }
     
     // MARK: - Actions
@@ -67,7 +54,7 @@ final class ProfileViewController: UIViewController {
         )
         
         let confirmAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
-            self?.logoutAndCleanup()
+            self?.logout()
         }
         let cancelAction = UIAlertAction(title: "Нет", style: .default) { [weak self] _ in
             self?.dismiss(animated: true)
@@ -79,29 +66,34 @@ final class ProfileViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func logoutAndCleanup() {
-        guard tokenStorage.removeToken(), let window = (UIApplication.shared
-            .connectedScenes
-            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
-            .last { $0.isKeyWindow }) else {
-                return
-            }
-        
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(
-                    ofTypes: record.dataTypes,
-                    for: [record],
-                    completionHandler: {}
-                )
-            }
-            window.rootViewController = SplashScreenViewController()
-        }
+    func logout() {
+        self.presenter?.logoutAndCleanup()
+    }
+
+    // MARK: - Other logic
+    func updateProfileDetails(profile: Profile) {
+        fullNameLabel.text = profile.name
+        userNameLabel.text = profile.loginName
+        profileDescriptionLabel.text = profile.bio
     }
     
-    // MARK: - Manual layout
-    private func addProfileImageView() {
+    func updateAvatar(from avatarURL: String?) {
+        guard
+            let profileImageURL = avatarURL,
+            let url = URL(string: profileImageURL)
+        else {
+            return
+        }
+        
+        let processor = RoundCornerImageProcessor(radius: .widthFraction(0.5), backgroundColor: UIColor(named: "YP Black"))
+        profilePictureImageView.kf.indicatorType = .activity
+        profilePictureImageView.kf.setImage(with: url, placeholder: UIImage(named: "Profile Stub"), options: [.processor(processor)])
+    }
+}
+
+// MARK: - Manual layout
+private extension ProfileViewController {
+    func addProfileImageView() {
         let image = UIImage(named: "Userpic")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
@@ -119,7 +111,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    private func addFullNameLabel() {
+    func addFullNameLabel() {
         let label = UILabel()
         fullNameLabel = label
         label.textColor = UIColor(named: "YP White")
@@ -136,7 +128,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    private func addUserNameLabel() {
+    func addUserNameLabel() {
         let label = UILabel()
         userNameLabel = label
         label.textColor = UIColor(named: "YP Gray")
@@ -153,7 +145,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    private func addDescriptionLabel() {
+    func addDescriptionLabel() {
         let label = UILabel()
         profileDescriptionLabel = label
         label.textColor = UIColor(named: "YP White")
@@ -170,7 +162,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    private func addLogoutButton() {
+    func addLogoutButton() {
         guard let logoutIcon = UIImage(systemName: "ipad.and.arrow.forward") else {
             return
         }
@@ -192,27 +184,5 @@ final class ProfileViewController: UIViewController {
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             button.centerYAnchor.constraint(equalTo: profilePictureImageView.centerYAnchor)
         ])
-    }
-}
-
-// MARK: - Profile Data
-private extension ProfileViewController {
-    private func updateProfileDetails(profile: Profile) {
-        fullNameLabel.text = profile.name
-        userNameLabel.text = profile.loginName
-        profileDescriptionLabel.text = profile.bio
-    }
-    
-    private func updateAvatar() {
-        guard
-            let profileImageURL = profileImageService?.avatarURL,
-            let url = URL(string: profileImageURL)
-        else {
-            return
-        }
-        
-        let processor = RoundCornerImageProcessor(radius: .widthFraction(0.5), backgroundColor: UIColor(named: "YP Black"))
-        profilePictureImageView.kf.indicatorType = .activity
-        profilePictureImageView.kf.setImage(with: url, placeholder: UIImage(named: "Profile Stub"), options: [.processor(processor)])
     }
 }

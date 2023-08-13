@@ -16,7 +16,7 @@ final class TabBarController: UITabBarController {
             else {
                 return
             }
-            profileViewController.profileImageService = service
+            profileViewController.presenter?.profileImageService = service
         }
     }
     
@@ -28,7 +28,7 @@ final class TabBarController: UITabBarController {
             else {
                 return
             }
-            profileViewController.profileService = service
+            profileViewController.presenter?.profileService = service
         }
     }
     
@@ -49,6 +49,9 @@ final class TabBarController: UITabBarController {
             image: UIImage(named: "tab_profile_active"),
             selectedImage: nil
         )
+        let profileViewPresenter = ProfileViewPresenter()
+        profileViewController.presenter = profileViewPresenter
+        profileViewPresenter.view = profileViewController
         
         self.viewControllers = [imagesListViewController, profileViewController]
     }

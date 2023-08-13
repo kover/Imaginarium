@@ -34,6 +34,8 @@
 		039B262E2A2B3DEF0086F5E9 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B262D2A2B3DEF0086F5E9 /* ImagesListCell.swift */; };
 		03A201822A8756980005DD61 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A201812A8756980005DD61 /* AuthHelper.swift */; };
 		03A2018A2A8764DD0005DD61 /* WebViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A201892A8764DD0005DD61 /* WebViewTests.swift */; };
+		03A201912A87884B0005DD61 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A201902A87884B0005DD61 /* ProfilePresenter.swift */; };
+		03A201932A87BC300005DD61 /* ProfileViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A201922A87BC300005DD61 /* ProfileViewTest.swift */; };
 		03BBCD632A4C25FA0054E285 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BBCD622A4C25FA0054E285 /* AuthConfiguration.swift */; };
 		03D328282A38DFC3004CAA82 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D328272A38DFC3004CAA82 /* SingleImageViewController.swift */; };
 		03E5729F2A27BC2F002438A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E5729E2A27BC2F002438A1 /* AppDelegate.swift */; };
@@ -87,6 +89,8 @@
 		03A201812A8756980005DD61 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		03A201872A8764DD0005DD61 /* ImaginariumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImaginariumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A201892A8764DD0005DD61 /* WebViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTests.swift; sourceTree = "<group>"; };
+		03A201902A87884B0005DD61 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		03A201922A87BC300005DD61 /* ProfileViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewTest.swift; sourceTree = "<group>"; };
 		03BBCD622A4C25FA0054E285 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		03D328272A38DFC3004CAA82 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		03E5729B2A27BC2F002438A1 /* Imaginarium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imaginarium.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				031D494F2A3245E8008069CF /* ProfileViewController.swift */,
+				03A201902A87884B0005DD61 /* ProfilePresenter.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				03A201892A8764DD0005DD61 /* WebViewTests.swift */,
+				03A201922A87BC300005DD61 /* ProfileViewTest.swift */,
 			);
 			path = ImaginariumTests;
 			sourceTree = "<group>";
@@ -414,6 +420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03A201932A87BC300005DD61 /* ProfileViewTest.swift in Sources */,
 				03A2018A2A8764DD0005DD61 /* WebViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,6 +443,7 @@
 				034FE5832A697B0400926BA6 /* ProfileImage.swift in Sources */,
 				03A201822A8756980005DD61 /* AuthHelper.swift in Sources */,
 				03F8F0A12A6031F7001D69F5 /* AlertPresenter.swift in Sources */,
+				03A201912A87884B0005DD61 /* ProfilePresenter.swift in Sources */,
 				031D49502A3245E8008069CF /* ProfileViewController.swift in Sources */,
 				03F8F09A2A5FDB6D001D69F5 /* ProfileImageService.swift in Sources */,
 				034FE5792A69713600926BA6 /* AlertModel.swift in Sources */,
