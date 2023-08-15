@@ -53,9 +53,14 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
             preferredStyle: .alert
         )
         
+        alert.view.accessibilityIdentifier = "Bye bye!"
+        
         let confirmAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
             self?.logout()
         }
+        
+        confirmAction.accessibilityIdentifier = "Yes"
+        
         let cancelAction = UIAlertAction(title: "Нет", style: .default) { [weak self] _ in
             self?.dismiss(animated: true)
         }
@@ -184,5 +189,7 @@ private extension ProfileViewController {
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             button.centerYAnchor.constraint(equalTo: profilePictureImageView.centerYAnchor)
         ])
+        
+        button.accessibilityIdentifier = "logout button"
     }
 }
