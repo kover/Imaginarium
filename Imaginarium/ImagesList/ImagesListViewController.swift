@@ -8,9 +8,9 @@
 import UIKit
 
 protocol ImagesListViewControllerProtocol: AnyObject {
-    var feedTableView: UITableView! { get }
     func presentAlert(_ controller: UIAlertController)
     func dismisAlert()
+    func insertRows(from start: Int, to end: Int)
 }
 
 final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
@@ -19,7 +19,9 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
-    @IBOutlet var feedTableView: UITableView!
+    @IBOutlet private var feedTableView: UITableView!
+    
+    private var imagesListServiceObserver: NSObjectProtocol?
     
     // MARK: - Lifecycle and ViewController overrides
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -31,12 +33,24 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         // Do any additional setup after loading the view.
         feedTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
-        presenter?.viewDidLoad()
+        imagesListServiceObserver = NotificationCenter.default
+            .addObserver(forName: ImagesListService.didChangeNotification,
+                         object: nil,
+                         queue: .main
+            ) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                self.presenter?.updateTableViewAnimated()
+            }
+        
+        presenter?.loadNextPage()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowSingleImageSegueIdentifier {
-            let viewController = segue.destination as! SingleImageViewController
+        if segue.identifier == ShowSingleImageSegueIdentifier,
+            let viewController = segue.destination as? SingleImageViewController
+        {
             let indexPath = sender as! IndexPath
             let photo = presenter?.photos[indexPath.row]
             viewController.photo = photo
@@ -51,6 +65,14 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     
     func dismisAlert() {
         dismiss(animated: true)
+    }
+    
+    func insertRows(from start: Int, to end: Int) {
+        feedTableView.performBatchUpdates {
+            feedTableView.insertRows(at: (start..<end).map { index in
+                IndexPath(row: index, section: 0)
+            }, with: .automatic)
+        }
     }
 }
 
@@ -82,7 +104,17 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return presenter?.imageHeight(at: indexPath, for: tableView.bounds.width) ?? 0
+        guard let image = presenter?.photos[indexPath.row] else {
+            return 0
+        }
+        let imageSize = image.size
+        
+        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+        let imageWidth = imageSize.width
+        let scale = imageViewWidth / imageWidth
+        let cellHeight = imageSize.height * scale + imageInsets.top + imageInsets.bottom
+        return cellHeight
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

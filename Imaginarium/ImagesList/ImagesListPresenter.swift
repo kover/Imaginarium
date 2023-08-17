@@ -11,21 +11,23 @@ protocol ImagesListPresenterProtocol {
     var view: ImagesListViewControllerProtocol? { get set }
     var photos: [Photo] { get }
     var photosCount: Int { get }
-    func viewDidLoad()
     func loadNextPage()
     func changeLike(at indexPath: IndexPath, for cell: ImagesListCell)
-    func imageHeight(at indexPath: IndexPath, for width: CGFloat) -> CGFloat
     func configure(cell: ImagesListCell, for indexPath: IndexPath)
+    func updateTableViewAnimated()
 }
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
     weak var view: ImagesListViewControllerProtocol?
     
-    var helper: ImagesListHelperProtocol?
+    private var helper: ImagesListHelperProtocol?
     
-    var imagesListService: ImagesListServiceProtocol?
+    private var imagesListService: ImagesListServiceProtocol?
     
-    private var imagesListServiceObserver: NSObjectProtocol?
+    init(helper: ImagesListHelperProtocol?, imagesListService: ImagesListServiceProtocol?) {
+        self.helper = helper
+        self.imagesListService = imagesListService
+    }
     
     var photos: [Photo] = []
     
@@ -41,21 +43,6 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         formatter.timeStyle = .none
         return formatter
     }()
-    
-    func viewDidLoad() {
-        imagesListServiceObserver = NotificationCenter.default
-            .addObserver(forName: ImagesListService.didChangeNotification,
-                         object: nil,
-                         queue: .main
-            ) { [weak self] _ in
-                guard let self = self else {
-                    return
-                }
-                self.updateTableViewAnimated()
-            }
-        
-        loadNextPage()
-    }
     
     func loadNextPage() {
         imagesListService?.fetchPhotosNextPage(completion: { [weak self] result in
@@ -86,17 +73,6 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
             }
             UIBlockingProgressHUD.dismiss()
         })
-    }
-    
-    func imageHeight(at indexPath: IndexPath, for width: CGFloat) -> CGFloat {
-        let imageSize = photos[indexPath.row].size
-        
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = width - imageInsets.left - imageInsets.right
-        let imageWidth = imageSize.width
-        let scale = imageViewWidth / imageWidth
-        let cellHeight = imageSize.height * scale + imageInsets.top + imageInsets.bottom
-        return cellHeight
     }
     
     func configure(cell: ImagesListCell, for indexPath: IndexPath) {
@@ -135,7 +111,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         view?.presentAlert(alert)
     }
     
-    private func updateTableViewAnimated() {
+    func updateTableViewAnimated() {
         guard let imagesListService = imagesListService else {
             return
         }
@@ -147,12 +123,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
             return
         }
         
-        view?.feedTableView.performBatchUpdates {
-            view?.feedTableView.insertRows(at: (currentCount..<newCount).map { index in
-                IndexPath(row: index, section: 0)
-            }, with: .automatic)
-        }
-
+        view?.insertRows(from: currentCount, to: newCount)
     }
 }
 

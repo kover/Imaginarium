@@ -43,9 +43,10 @@ final class TabBarController: UITabBarController {
         guard let imagesListViewController = imagesListViewController as? ImagesListViewController else {
             return
         }
-        let imagesListPresenter = ImagesListPresenter()
-        imagesListPresenter.imagesListService = ImagesListService()
-        imagesListPresenter.helper = ImagesListHelper()
+        let imagesListPresenter = ImagesListPresenter(
+            helper: ImagesListHelper(),
+            imagesListService: ImagesListService()
+        )
         imagesListViewController.presenter = imagesListPresenter
         imagesListPresenter.view = imagesListViewController
         

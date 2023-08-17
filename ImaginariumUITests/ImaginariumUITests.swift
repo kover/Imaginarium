@@ -53,9 +53,13 @@ final class ImaginariumUITests: XCTestCase {
     func testFeed() throws {
         let tablesQuery = app.tables
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
-        cell.swipeUp()
-        
         XCTAssertTrue(cell.waitForExistence(timeout: 5))
+        
+        app.swipeUp()
+        sleep(2)
+        
+        app.swipeDown()
+        sleep(2)
         
         let cellToManage = tablesQuery.children(matching: .cell).element(boundBy: 1)
         

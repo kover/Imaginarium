@@ -9,20 +9,20 @@
 import XCTest
 
 final class ImagesListPresenterSpy: ImagesListPresenterProtocol {
+    func updateTableViewAnimated() {
+        
+    }
+    
     var view: Imaginarium.ImagesListViewControllerProtocol?
     
     var photos: [Imaginarium.Photo] = []
     
     var photosCount: Int = 0
     
-    var viewDidLoadCalled = false
-    
-    func viewDidLoad() {
-        viewDidLoadCalled = true
-    }
+    var loadNextPageCalled = false
     
     func loadNextPage() {
-        
+        loadNextPageCalled = true
     }
     
     func changeLike(at indexPath: IndexPath, for cell: Imaginarium.ImagesListCell) {
@@ -53,7 +53,7 @@ final class ImagesListServiceSpy: ImagesListServiceProtocol {
 }
 
 final class ImagesListViewTests: XCTestCase {
-    func testViewControllerCallsViewDidLoad() {
+    func testViewControllerCallsLoadNexPage() {
         // given
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
@@ -65,14 +65,13 @@ final class ImagesListViewTests: XCTestCase {
         let _ = viewController.view
         
         // then
-        XCTAssertTrue(presenter.viewDidLoadCalled)
+        XCTAssertTrue(presenter.loadNextPageCalled)
     }
     
     func testPresenterCallsForLikeUpdate() {
         // given
-        let presenter = ImagesListPresenter()
         let service = ImagesListServiceSpy()
-        presenter.imagesListService = service
+        let presenter = ImagesListPresenter(helper: nil, imagesListService: service)
         presenter.photos = [
             Photo(
                 id: "0",
@@ -94,12 +93,11 @@ final class ImagesListViewTests: XCTestCase {
     
     func testPresenterLoadsNextPageOnLoad() {
         // given
-        let presenter = ImagesListPresenter()
         let service = ImagesListServiceSpy()
-        presenter.imagesListService = service
+        let presenter = ImagesListPresenter(helper: nil, imagesListService: service)
         
         // when
-        presenter.viewDidLoad()
+        presenter.loadNextPage()
         
         // then
         XCTAssertTrue(service.fetchPhotosNextPageCalled)
