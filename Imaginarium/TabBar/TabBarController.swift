@@ -11,12 +11,13 @@ final class TabBarController: UITabBarController {
     var profileImageService: ProfileImageServiceProtocol? {
         didSet {
             guard let service = profileImageService,
-                    let viewControllers = viewControllers,
-                    let profileViewController = viewControllers[1] as? ProfileViewController
+                  let viewControllers = viewControllers,
+                  let profileViewController = viewControllers[1] as? ProfileViewController,
+                  let presenter = profileViewController.presenter as? ProfileViewPresenter
             else {
                 return
             }
-            profileViewController.profileImageService = service
+        presenter.profileImageService = service
         }
     }
     
@@ -24,11 +25,12 @@ final class TabBarController: UITabBarController {
         didSet {
             guard let service = profileService,
                   let viewControllers = viewControllers,
-                  let profileViewController = viewControllers[1] as? ProfileViewController
+                  let profileViewController = viewControllers[1] as? ProfileViewController,
+                  let presenter = profileViewController.presenter as? ProfileViewPresenter
             else {
                 return
             }
-            profileViewController.profileService = service
+            presenter.profileService = service
         }
     }
     
@@ -41,7 +43,12 @@ final class TabBarController: UITabBarController {
         guard let imagesListViewController = imagesListViewController as? ImagesListViewController else {
             return
         }
-        imagesListViewController.imagesListService = ImagesListService()
+        let imagesListPresenter = ImagesListPresenter(
+            helper: ImagesListHelper(),
+            imagesListService: ImagesListService()
+        )
+        imagesListViewController.presenter = imagesListPresenter
+        imagesListPresenter.view = imagesListViewController
         
         let profileViewController = ProfileViewController()
         profileViewController.tabBarItem = UITabBarItem(
@@ -49,6 +56,9 @@ final class TabBarController: UITabBarController {
             image: UIImage(named: "tab_profile_active"),
             selectedImage: nil
         )
+        let profileViewPresenter = ProfileViewPresenter()
+        profileViewController.presenter = profileViewPresenter
+        profileViewPresenter.view = profileViewController
         
         self.viewControllers = [imagesListViewController, profileViewController]
     }

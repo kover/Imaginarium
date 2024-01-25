@@ -20,6 +20,7 @@ final class ImagesListCell: UITableViewCell {
                 return
             }
             likeButton.setImage(image, for: .normal)
+            likeButton.accessibilityIdentifier = isFavorite ? "like button on" : "like button off"
         }
     }
     
